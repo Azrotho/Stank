@@ -11,4 +11,39 @@ project(STANK
 
 add_executable(stank src/client.cpp)
 
+find_package(gf 1.2.0 REQUIRED COMPONENTS graphics)
+
+target_link_libraries(stank
+    PRIVATE
+    gf::graphics
+)
+
+target_compile_options(stank
+        PRIVATE
+        "-Wall" "-Wextra" "-pedantic" "-g" "-O2"
+)
+
+set_target_properties(stank
+        PROPERTIES
+        CXX_STANDARD 17
+        CXX_EXTENSIONS OFF
+)
+
 add_executable(stank_server src/server.cpp)
+
+target_compile_options(stank_server
+        PRIVATE
+        "-Wall" "-Wextra" "-pedantic" "-g" "-O2"
+)
+
+set_target_properties(stank_server
+        PROPERTIES
+        CXX_STANDARD 17
+        CXX_EXTENSIONS OFF
+)
+
+add_custom_command(TARGET stank POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_CURRENT_SOURCE_DIR}/data/stank"
+        "$<TARGET_FILE_DIR:stank>/"
+)
