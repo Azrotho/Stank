@@ -13,7 +13,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-
+# Installer gf
+      - name: Install gf
+        run : |
+          sudo apt-get update -y
+          sudo apt-get install libsdl2-dev libboost-dev libfreetype6-dev zlib1g-dev libpugixml-dev cmake -y
+          git clone https://github.com/GamedevFramework/gf.git
+          cd gf
+          git submodule update --init
+          mkdir build
+          cd build
+          cmake ../ -DGF_BUILD_GAMES=ON -DGF_BUILD_TOOLS=ON
+          make
+          
       - name: CMake
         run: mkdir build && cd build && cmake ..
 
