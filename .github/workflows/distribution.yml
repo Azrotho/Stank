@@ -70,7 +70,7 @@ jobs:
       - name: Upload Artifact Client
         uses: actions/upload-artifact@v7
         with:
-          name: standard-client-linux
+          name: stank-client-linux-x86_84
           path: stank-client-linux/
           retention-days: 7
 
@@ -80,7 +80,7 @@ jobs:
       - name: Upload Artifact Server
         uses: actions/upload-artifact@v7
         with:
-          name: standard-server-linux
+          name: stank-server-linux-x86_84
           path: stank-server-linux/
           retention-days: 7
 
