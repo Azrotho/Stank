@@ -25,6 +25,7 @@ jobs:
           cd build
           cmake ../ -DGF_BUILD_GAMES=ON -DGF_BUILD_TOOLS=ON -DCMAKE_CXX_FLAGS="-include cstdint" 
           make
+          sudo make install
 
       - name: CMake
         run: mkdir build && cd build && cmake ..
