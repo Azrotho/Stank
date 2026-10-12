@@ -74,5 +74,15 @@ jobs:
           path: stank-client-linux/
           retention-days: 7
 
+      - name: Prepare Server
+        run: mkdir stank-server-linux && cp build/stankd stank-server-linux/
+
+      - name: Upload Artifact Server
+        uses: actions/upload-artifact@v7
+        with:
+          name: standard-server-linux
+          path: stank-server-linux/
+          retention-days: 7
+
 #  A voir plus tard pour CI/CD windows, macos
 
