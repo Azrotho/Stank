@@ -1,0 +1,36 @@
+name: ci.yml
+on:
+  push:
+    branches: ['**']
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: read
+      checks: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install gf
+        run : |
+          sudo apt-get update -y
+          sudo apt-get install libsdl2-dev libstb-dev libboost-dev libfreetype6-dev zlib1g-dev libpugixml-dev cmake -y
+          git clone https://github.com/GamedevFramework/gf.git
+          cd gf
+          git submodule update --init
+          mkdir build
+          cd build
+          cmake ../ -DGF_BUILD_GAMES=ON -DGF_BUILD_TOOLS=ON -DCMAKE_CXX_FLAGS="-include cstdint" 
+          make
+          sudo make install
+
+      - name: CMake
+        run: mkdir build && cd build && cmake ..
+
+      - name: Build
+        run: cd build && make
+
+#  A voir plus tard pour CI/CD linux, windows, macos
