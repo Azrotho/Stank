@@ -23,7 +23,8 @@ jobs:
           git submodule update --init
           mkdir build
           cd build
-          cmake ../ -DGF_BUILD_GAMES=ON -DGF_BUILD_TOOLS=ON
+# weird fix, thank gf
+          cmake ../ -DGF_BUILD_GAMES=ON -DGF_BUILD_TOOLS=ON -DCMAKE_CXX_FLAGS="-include cstdint" 
           make
 
       - name: CMake
