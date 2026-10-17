@@ -24,14 +24,14 @@ jobs:
           mkdir build
           cd build
           cmake ../ -DGF_BUILD_GAMES=ON -DGF_BUILD_TOOLS=ON -DCMAKE_CXX_FLAGS="-include cstdint" 
-          make
+          make -j$(nproc)
           sudo make install
 
       - name: CMake
         run: mkdir build && cd build && cmake ..
 
       - name: Build
-        run: cd build && make
+        run: cd build && make -j$(nproc)
   build-linux:
     name: Build Linux
     needs:
@@ -55,14 +55,14 @@ jobs:
           mkdir build
           cd build
           cmake ../ -DBUILD_SHARED_LIBS=OFF -DGF_BUILD_GAMES=ON -DGF_BUILD_TOOLS=ON -DCMAKE_CXX_FLAGS="-include cstdint" 
-          make
+          make -j$(nproc)
           sudo make install
 
       - name: CMake
         run: mkdir build && cd build && cmake ..
 
       - name: Build
-        run: cd build && make
+        run: cd build && make -j$(nproc)
 
       - name: Prepare Client
         run: mkdir stank-client-linux && cp build/stank stank-client-linux/
