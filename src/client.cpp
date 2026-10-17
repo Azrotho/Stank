@@ -10,8 +10,13 @@
 #include <gf/Window.h>
 #include <iostream>
 
+#include "client/Networking.h"
+
 int main() {
     std::cout << "Hello, World Client!" << std::endl;
+
+    Networking networking;
+    networking.start();
 
     gf::Window window("Example", { 640, 480 });
     gf::RenderWindow renderer(window);
@@ -30,6 +35,7 @@ int main() {
             switch (event.type) {
                 case gf::EventType::Closed:
                     window.close();
+                    networking.stop();
                     break;
                 default:
                     break;
