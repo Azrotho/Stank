@@ -11,6 +11,7 @@ project(STANK
 
 add_executable(stank src/client.cpp
         src/client/ClientNetwork.h
+        src/common/Constants.h
         src/client/ClientNetwork.cpp)
 
 find_package(gf 1.2.0 REQUIRED COMPONENTS graphics net)
