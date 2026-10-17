@@ -33,7 +33,10 @@ set_target_properties(stank
         CXX_EXTENSIONS OFF
 )
 
-add_executable(stank_server src/server.cpp)
+add_executable(stank_server
+        src/server.cpp
+        src/common/Constants.h
+    )
 
 target_compile_options(stank_server
         PRIVATE
