@@ -20,6 +20,7 @@ find_package(gf 1.2.0 REQUIRED COMPONENTS graphics net)
 target_link_libraries(stank
     PRIVATE
     gf::graphics
+    gf::net
 )
 
 target_compile_options(stank
@@ -37,6 +38,11 @@ add_executable(stank_server
         src/server.cpp
         src/common/Constants.h
     )
+
+target_link_libraries(stank_server
+        PRIVATE
+        gf::net
+)
 
 target_compile_options(stank_server
         PRIVATE
