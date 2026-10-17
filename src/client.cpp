@@ -10,6 +10,8 @@
 #include <gf/Window.h>
 #include <iostream>
 
+#include "common/Constants.h"
+
 #include "client/ClientNetwork.h"
 
 int main() {
