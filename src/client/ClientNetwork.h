@@ -8,9 +8,9 @@
 #include <thread>
 
 
-class Networking {
+class ClientNetwork {
 	public:
-	Networking();
+	ClientNetwork();
 	void start();
 	void stop();
 	void run();

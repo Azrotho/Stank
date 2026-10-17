@@ -10,12 +10,12 @@
 #include <gf/Window.h>
 #include <iostream>
 
-#include "client/Networking.h"
+#include "client/ClientNetwork.h"
 
 int main() {
     std::cout << "Hello, World Client!" << std::endl;
 
-    Networking networking;
+    ClientNetwork networking;
     networking.start();
 
     gf::Window window("Example", { 640, 480 });

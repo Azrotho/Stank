@@ -10,8 +10,8 @@ project(STANK
     VERSION 0.1.0)
 
 add_executable(stank src/client.cpp
-        src/client/Networking.h
-        src/client/Networking.cpp)
+        src/client/ClientNetwork.h
+        src/client/ClientNetwork.cpp)
 
 find_package(gf 1.2.0 REQUIRED COMPONENTS graphics net)
 
