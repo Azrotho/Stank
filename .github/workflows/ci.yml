@@ -1,4 +1,5 @@
 name: ci.yml
+permissions: {}
 on:
   pull_request:
 jobs:

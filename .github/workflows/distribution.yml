@@ -1,4 +1,5 @@
 name: distribution.yml
+permissions: {}
 on:
   push:
     branches: ['**']
