@@ -5,3 +5,4 @@
 
 An online game made with [GamedevFramework](https://gamedevframework.github.io/) made in C++!
 
+![Codacy grade](https://img.shields.io/codacy/grade/6de8d151206e4835b40fe2498d4a71d6?style=for-the-badge)
