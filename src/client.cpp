@@ -50,20 +50,8 @@ int main() {
                     networking.stop();
                     break; // TODO: Séparé input & update
                 case gf::EventType::KeyPressed:
-                    if (event.key.keycode == gf::Keycode::Right) {
-                        player.move(100.0f * dt, 0);
-                    }
-                    if (event.key.keycode == gf::Keycode::Left) {
-                        player.move(-100.0f * dt, 0);
-                    }
-                    if (event.key.keycode == gf::Keycode::Up) {
-                        player.move(0, -100.0f * dt);
-                    }
-                    if (event.key.keycode == gf::Keycode::Down) {
-                        player.move(0, 100.0f * dt);
-                    }
-                    break;
                 case gf::EventType::KeyRepeated:
+
                     if (event.key.keycode == gf::Keycode::Right) {
                         player.move(100.0f * dt, 0);
                     }
