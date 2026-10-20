@@ -13,6 +13,7 @@
 #include "common/Constants.h"
 
 #include "client/ClientNetwork.h"
+#include "client/Player.h"
 
 int main() {
     std::cout << "Hello, World Client!" << std::endl;
@@ -20,24 +21,61 @@ int main() {
     ClientNetwork networking;
     networking.start();
 
+    Player player;
+
     gf::Window window("Example", { 640, 480 });
     gf::RenderWindow renderer(window);
     renderer.clear(gf::Color::White);
+
+    gf::Texture texture("sprite/PNG/default/barrelRed_side.png");
+    gf::Sprite sprite(texture);
 
     gf::Font font("DroidSans.ttf");
 
     gf::Text text("Hello gf!", font, 50);
     text.setColor(gf::Color4f(0.0f,0.0f,0.0f,1.0f));
     text.setPosition({ 100, 100 });
+    sprite.setPosition({ player.x, player.y });
+
+    gf::Clock clock;
 
     while (window.isOpen()) {
         // Process events
+        float dt = clock.restart().asSeconds();
         gf::Event event;
         while (window.pollEvent(event)) {
             switch (event.type) {
                 case gf::EventType::Closed:
                     window.close();
                     networking.stop();
+                    break; // TODO: Séparé input & update
+                case gf::EventType::KeyPressed:
+                    if (event.key.keycode == gf::Keycode::Right) {
+                        player.move(100.0f * dt, 0);
+                    }
+                    if (event.key.keycode == gf::Keycode::Left) {
+                        player.move(-100.0f * dt, 0);
+                    }
+                    if (event.key.keycode == gf::Keycode::Up) {
+                        player.move(0, -100.0f * dt);
+                    }
+                    if (event.key.keycode == gf::Keycode::Down) {
+                        player.move(0, 100.0f * (float) dt);
+                    }
+                    break;
+                case gf::EventType::KeyRepeated:
+                    if (event.key.keycode == gf::Keycode::Right) {
+                        player.move(100.0f * dt, 0);
+                    }
+                    if (event.key.keycode == gf::Keycode::Left) {
+                        player.move(-100.0f * dt, 0);
+                    }
+                    if (event.key.keycode == gf::Keycode::Up) {
+                        player.move(0, -100.0f * dt);
+                    }
+                    if (event.key.keycode == gf::Keycode::Down) {
+                        player.move(0, 100.0f * (float) dt);
+                    }
                     break;
                 default:
                     break;
@@ -45,7 +83,8 @@ int main() {
         }
         // Draw the entities
         renderer.clear();
-        //renderer.draw(sprite);
+        sprite.setPosition({ player.x, player.y });
+        renderer.draw(sprite);
         renderer.draw(text);
         renderer.display();
     }
