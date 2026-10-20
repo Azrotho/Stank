@@ -13,12 +13,18 @@
 #include "common/Constants.h"
 
 #include "client/ClientNetwork.h"
+#include "client/Player.h"
 
 int main() {
     std::cout << "Hello, World Client!" << std::endl;
 
     ClientNetwork networking;
     networking.start();
+
+    gf::Texture texture("sprite/PNG/default/barrelRed_side.png");
+    gf::Sprite sprite(texture);
+
+    Player player;
 
     gf::Window window("Example", { 640, 480 });
     gf::RenderWindow renderer(window);
@@ -30,6 +36,9 @@ int main() {
     text.setColor(gf::Color4f(0.0f,0.0f,0.0f,1.0f));
     text.setPosition({ 100, 100 });
 
+    gf::Clock clock;
+    float dt = clock.restart().asSeconds();
+
     while (window.isOpen()) {
         // Process events
         gf::Event event;
@@ -38,6 +47,20 @@ int main() {
                 case gf::EventType::Closed:
                     window.close();
                     networking.stop();
+                    break; // TODO: Séparé input & update
+                case gf::EventType::KeyPressed:
+                    if (event.key.keycode == gf::Keycode::Right) {
+                        player.move(10 * dt, 0);
+                    }
+                    if (event.key.keycode == gf::Keycode::Left) {
+                        player.move(-10 * dt, 0);
+                    }
+                    if (event.key.keycode == gf::Keycode::Up) {
+                        player.move(0, -10 * dt);
+                    }
+                    if (event.key.keycode == gf::Keycode::Down) {
+                        player.move(0, 10 * dt);
+                    }
                     break;
                 default:
                     break;
@@ -45,7 +68,8 @@ int main() {
         }
         // Draw the entities
         renderer.clear();
-        //renderer.draw(sprite);
+        sprite.setPosition({ player.x, player.y });
+        renderer.draw(sprite);
         renderer.draw(text);
         renderer.display();
     }
