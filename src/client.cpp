@@ -60,7 +60,7 @@ int main() {
                         player.move(0, -100.0f * dt);
                     }
                     if (event.key.keycode == gf::Keycode::Down) {
-                        player.move(0, 100.0f * (float) dt);
+                        player.move(0, 100.0f * dt);
                     }
                     break;
                 case gf::EventType::KeyRepeated:
@@ -74,7 +74,7 @@ int main() {
                         player.move(0, -100.0f * dt);
                     }
                     if (event.key.keycode == gf::Keycode::Down) {
-                        player.move(0, 100.0f * (float) dt);
+                        player.move(0, 100.0f * dt);
                     }
                     break;
                 default:
