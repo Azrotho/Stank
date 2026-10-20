@@ -39,7 +39,9 @@ set_target_properties(stank
 add_executable(stank_server
         src/server.cpp
         src/common/Constants.h
-    )
+        src/server/ServerNetworking.cpp
+        src/server/ServerNetworking.h
+)
 
 target_link_libraries(stank_server
         PRIVATE
