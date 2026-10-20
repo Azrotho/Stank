@@ -21,26 +21,27 @@ int main() {
     ClientNetwork networking;
     networking.start();
 
-    gf::Texture texture("sprite/PNG/default/barrelRed_side.png");
-    gf::Sprite sprite(texture);
-
     Player player;
 
     gf::Window window("Example", { 640, 480 });
     gf::RenderWindow renderer(window);
     renderer.clear(gf::Color::White);
 
+    gf::Texture texture("sprite/PNG/default/barrelRed_side.png");
+    gf::Sprite sprite(texture);
+
     gf::Font font("DroidSans.ttf");
 
     gf::Text text("Hello gf!", font, 50);
     text.setColor(gf::Color4f(0.0f,0.0f,0.0f,1.0f));
     text.setPosition({ 100, 100 });
+    sprite.setPosition({ player.x, player.y });
 
     gf::Clock clock;
-    float dt = clock.restart().asSeconds();
 
     while (window.isOpen()) {
         // Process events
+        float dt = clock.restart().asSeconds();
         gf::Event event;
         while (window.pollEvent(event)) {
             switch (event.type) {
@@ -50,16 +51,30 @@ int main() {
                     break; // TODO: Séparé input & update
                 case gf::EventType::KeyPressed:
                     if (event.key.keycode == gf::Keycode::Right) {
-                        player.move(10 * dt, 0);
+                        player.move(100.0f * dt, 0);
                     }
                     if (event.key.keycode == gf::Keycode::Left) {
-                        player.move(-10 * dt, 0);
+                        player.move(-100.0f * dt, 0);
                     }
                     if (event.key.keycode == gf::Keycode::Up) {
-                        player.move(0, -10 * dt);
+                        player.move(0, -100.0f * dt);
                     }
                     if (event.key.keycode == gf::Keycode::Down) {
-                        player.move(0, 10 * dt);
+                        player.move(0, 100.0f * (float) dt);
+                    }
+                    break;
+                case gf::EventType::KeyRepeated:
+                    if (event.key.keycode == gf::Keycode::Right) {
+                        player.move(100.0f * dt, 0);
+                    }
+                    if (event.key.keycode == gf::Keycode::Left) {
+                        player.move(-100.0f * dt, 0);
+                    }
+                    if (event.key.keycode == gf::Keycode::Up) {
+                        player.move(0, -100.0f * dt);
+                    }
+                    if (event.key.keycode == gf::Keycode::Down) {
+                        player.move(0, 100.0f * (float) dt);
                     }
                     break;
                 default:
