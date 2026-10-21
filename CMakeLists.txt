@@ -41,6 +41,10 @@ add_executable(stank_server
         src/common/Constants.h
         src/server/ServerNetworking.cpp
         src/server/ServerNetworking.h
+        src/server/GameState.cpp
+        src/server/GameState.h
+        src/server/ServerEntity.cpp
+        src/server/ServerEntity.h
 )
 
 target_link_libraries(stank_server
