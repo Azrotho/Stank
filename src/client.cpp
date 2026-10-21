@@ -9,6 +9,7 @@
 #include <gf/Texture.h>
 #include <gf/Window.h>
 #include <iostream>
+#include <random>
 
 #include "common/Constants.h"
 
@@ -17,6 +18,16 @@
 
 int main() {
     std::cout << "Hello, World Client!" << std::endl;
+
+
+    // Source - https://stackoverflow.com/a/19666713
+    // Posted by Bill Lynch, modified by community. See post 'Timeline' for change history
+    // Retrieved 2026-10-21, License - CC BY-SA 4.0
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<uint32_t> dist(0, UINT32_MAX);
+
+    uint32_t id = dist(mt);
 
     ClientNetwork networking;
     networking.start();
