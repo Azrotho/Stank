@@ -14,12 +14,35 @@ void ServerNetworking::start() {
 
 void ServerNetworking::run() {
     //First: open port to let clients connect
-    //Second: initialize networking object (TODO: implement a networking object)
-    //Third: create a thread for each client
-    //  //Fourth: wait for clients to do something
-    //  //Fifth: upon receiving an input, deserialize it and send it to the network thread
-    //Sixth: send input to gameLoop
-    //Seventh: get gameState/answer from gameLoop
-    //  //Eighth: send gameState to each client, then go to step Four
+    int retPort = openPort();
+    if (retPort != 0) {
+        //erreur : à préciser
+    }
+    //once clients connected :
+    int nbClients = 1;//TODO
+    //Second: create a thread for each client
+    for (int i = 0 ; i < nbClients ; i++) {
+
+    }
+    while (true) {
+        //  //Third: wait for clients to do something
+        //  //Fourth: upon receiving an input, deserialize it and send it to the network thread
+        //Fifth: send input to gameLoop
+        //Sixth: get gameState/answer from gameLoop
+        //  //Seventh: send gameState to each client
+    }
+
+    stop();
+}
+
+void ServerNetworking::stop() {
     //End of the game : disconnect from client, close port, close server
+}
+
+int ServerNetworking::openPort() {
+    return 0;
+}
+
+int ServerNetworking::runClient() {
+    return 0;
 }
