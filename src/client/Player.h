@@ -10,6 +10,7 @@ class Player {
 	public:
 		float x = 0;
 		float y = 0;
+		float rot = 0;
 		void move(float dx, float dy);
 };
 
