@@ -14,7 +14,8 @@ add_executable(stank src/client.cpp
         src/common/Constants.h
         src/client/ClientNetwork.cpp
         src/client/Player.h
-        src/client/Player.cpp)
+        src/client/Player.cpp
+        src/common/Protocol.h)
 
 find_package(gf 1.2.0 REQUIRED COMPONENTS graphics net)
 
@@ -45,6 +46,7 @@ add_executable(stank_server
         src/server/GameState.h
         src/server/ServerEntity.cpp
         src/server/ServerEntity.h
+        src/common/Protocol.h
 )
 
 target_link_libraries(stank_server
