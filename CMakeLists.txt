@@ -47,6 +47,8 @@ add_executable(stank_server
         src/server/ServerEntity.cpp
         src/server/ServerEntity.h
         src/common/Protocol.h
+        src/server/ServerUtility.cpp
+        src/server/ServerUtility.h
 )
 
 target_link_libraries(stank_server

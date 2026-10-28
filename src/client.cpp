@@ -20,10 +20,6 @@
 int main() {
     std::cout << "Hello, World Client!" << std::endl;
 
-
-    gf::Random random = gf::Random();
-    uint64_t id = random.computeId();
-
     ClientNetwork networking;
     networking.start();
 
