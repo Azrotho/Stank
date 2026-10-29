@@ -36,5 +36,4 @@ void ClientNetwork::run() {
 
 void ClientNetwork::stop() {
 	m_shouldStop.store(true);
-	this->networkThread.join();
 }
