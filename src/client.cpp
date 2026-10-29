@@ -25,7 +25,7 @@ int main() {
 
     Player player;
 
-    gf::Window window("Example", { 640, 480 });
+    gf::Window window("Stank", { 640, 480 });
     gf::RenderWindow renderer(window);
     renderer.clear(gf::Color::White);
 
