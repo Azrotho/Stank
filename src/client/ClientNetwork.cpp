@@ -8,6 +8,7 @@ ClientNetwork::ClientNetwork() = default;
 
 void ClientNetwork::start() {
 	networkThread = std::thread(&ClientNetwork::run, this);
+	networkThread.detach();
 }
 
 void ClientNetwork::run() {
