@@ -22,6 +22,13 @@ class ClientNetwork {
 	void stop();
 	void run();
 	gf::Queue<gf::Packet> queue;
+
+	template<typename T>
+	void send(const T& data) {
+			gf::Packet packet;
+			packet.is(data);
+			m_socket.sendPacket(packet);
+	}
 	private:
 	std::thread networkThread;
 	gf::TcpSocket m_socket;

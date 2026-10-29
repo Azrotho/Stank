@@ -12,7 +12,7 @@ void ClientNetwork::start() {
 
 void ClientNetwork::run() {
 
-	// TODO: Connexion au serveur
+	// Connexion au serveur
 
 	// Creation du socket
 	gf::TcpSocket socket(SERVER_IP, SERVER_PORT);
@@ -22,7 +22,10 @@ void ClientNetwork::run() {
 		return;
 	}
 
-	// TODO: Envoyer ClientHello packet au serveur
+	// Envoyer ClientHello packet au serveur
+
+	m_socket = std::move(socket);
+	send(ClientHello{});
 
 	while (!m_shouldStop.load()) {
 		// TODO: Boucle recevoir les paquets.
