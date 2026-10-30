@@ -24,6 +24,18 @@ Archive& operator|(Archive& ar, ClientHello& data) {
 	return ar;
 }
 
+struct ClientMove {
+	static constexpr gf::Id type = "ClientMove"_id;
+	float x;
+	float y;
+	float rot;
+};
+
+template <typename Archive>
+Archive& operator|(Archive& ar, ClientMove& data) {
+	return ar | data.x | data.y | data.rot;
+}
+
 /*
  * Server --> Client packets
  */
