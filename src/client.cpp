@@ -18,6 +18,9 @@
 #include "client/Player.h"
 
 int main() {
+
+    float tickTimeAccumulator = 0.0f;
+
     std::cout << "Hello, World Client!" << std::endl;
 
     ClientNetwork networking;
@@ -44,6 +47,10 @@ int main() {
     while (window.isOpen()) {
         // Process events
         float dt = clock.restart().asSeconds();
+
+        // Envoyer packet ClientMove tout les 30tps (1 / 30)
+        tickTimeAccumulator += dt;
+
         gf::Event event;
         while (window.pollEvent(event)) {
             switch (event.type) {
@@ -71,6 +78,12 @@ int main() {
                     break;
             }
         }
+
+        if (tickTimeAccumulator >= (1.0f / 30.0f)) {
+            networking.send(ClientMove{player.x, player.y, player.rot});
+            tickTimeAccumulator = 0.0f;
+        }
+
         // Draw the entities
         renderer.clear();
         sprite.setPosition({ player.x, player.y });
