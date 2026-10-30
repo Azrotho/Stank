@@ -22,7 +22,7 @@ class ClientNetwork {
 	void stop();
 	void run();
 	gf::Queue<gf::Packet> queue;
-
+	std::atomic_bool m_isConnected{false};
 	template<typename T>
 	void send(const T& data) {
 			gf::Packet packet;
@@ -33,7 +33,6 @@ class ClientNetwork {
 	std::thread networkThread;
 	gf::TcpSocket m_socket;
 	std::atomic_bool m_shouldStop{false};
-	std::atomic_bool m_isConnected{false};
 };
 
 
