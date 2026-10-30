@@ -12,6 +12,7 @@
 #include <iostream>
 #include <random>
 #include <gf/Random.h>
+#include <cmath>
 
 #include "common/Constants.h"
 
@@ -84,6 +85,8 @@ int main() {
     text.setColor(gf::Color4f(0.0f,0.0f,0.0f,1.0f));
     text.setPosition({ 100, 100 });
     sprite.setPosition({ player.x, player.y });
+    sprite.setScale(4.0f);
+    sprite.setAnchor(gf::Anchor::Center);
 
     gf::Clock clock;
 
@@ -113,6 +116,7 @@ int main() {
             text.setString("Connexion KO");
         }
 
+        //déplacements
         if ((rotateRight.isActive()==false && rotateLeft.isActive()==false) || (rotateRight.isActive() && rotateLeft.isActive())){
             turn=0;
         }else {
@@ -133,7 +137,6 @@ int main() {
         if (turn<-maxTurn) turn=-maxTurn;
 
         player.move(speed*dt,turn*dt);
-
         actions.reset();
 
         if (tickTimeAccumulator >= (1.0f / 30.0f)) {
@@ -144,6 +147,7 @@ int main() {
         // Draw the entities
         renderer.clear();
         sprite.setPosition({ player.x, player.y });
+        sprite.setRotation((float) (player.rot*(M_PI/180.0f)));
         renderer.draw(sprite);
         renderer.draw(text);
         renderer.display();
