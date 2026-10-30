@@ -107,6 +107,12 @@ int main() {
             }
         }
 
+        if (networking.m_isConnected.load()) {
+            text.setString("Connexion OK");
+        } else {
+            text.setString("Connexion KO");
+        }
+
         if ((rotateRight.isActive()==false && rotateLeft.isActive()==false) || (rotateRight.isActive() && rotateLeft.isActive())){
             turn=0;
         }else {
