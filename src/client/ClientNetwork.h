@@ -33,6 +33,7 @@ class ClientNetwork {
 	std::thread networkThread;
 	gf::TcpSocket m_socket;
 	std::atomic_bool m_shouldStop{false};
+	std::atomic_bool m_isConnected{false};
 };
 
 

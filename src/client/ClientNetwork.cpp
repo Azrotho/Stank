@@ -23,6 +23,8 @@ void ClientNetwork::run() {
 		return;
 	}
 
+	m_isConnected.store(true);
+
 	// Envoyer ClientHello packet au serveur
 
 	m_socket = std::move(socket);
