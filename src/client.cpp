@@ -8,6 +8,7 @@
 #include <gf/Text.h>
 #include <gf/Texture.h>
 #include <gf/Window.h>
+#include <gf/Action.h>
 #include <iostream>
 #include <random>
 #include <gf/Random.h>
@@ -17,9 +18,51 @@
 #include "client/ClientNetwork.h"
 #include "client/Player.h"
 
+static float deceleration(float speed,float accel) {
+    if (speed>-2.0f && speed<2.0f) speed=0;
+    if (speed>0) speed-=accel;
+    if (speed<0)speed+=accel;
+    return speed;
+}
+
 int main() {
 
+    //set les touches :
+    gf::Action rotateLeft("RotateLeft");
+    rotateLeft.setContinuous();
+    rotateLeft.addScancodeKeyControl(gf::Scancode::A);
+    rotateLeft.addKeycodeKeyControl(gf::Keycode::Left);
+
+    gf::Action rotateRight("RotateRight");
+    rotateRight.setContinuous();
+    rotateRight.addScancodeKeyControl(gf::Scancode::D);
+    rotateRight.addKeycodeKeyControl(gf::Keycode::Right);
+
+    gf::Action moveForward("moveForward");
+    moveForward.setContinuous();
+    moveForward.addScancodeKeyControl(gf::Scancode::W);
+    moveForward.addKeycodeKeyControl(gf::Keycode::Up);
+
+    gf::Action moveBackward("moveBackward");
+    moveBackward.setContinuous();
+    moveBackward.addScancodeKeyControl(gf::Scancode::S);
+    moveBackward.addKeycodeKeyControl(gf::Keycode::Down);
+
+    gf::ActionContainer actions;
+    actions.addAction(rotateLeft);
+    actions.addAction(rotateRight);
+    actions.addAction(moveForward);
+    actions.addAction(moveBackward);
+
     float tickTimeAccumulator = 0.0f;
+
+    //variables pour la vitesse
+    float accel = 0.05f;
+    float speed = 0.0f;
+    float maxSpeed = 25.0f;
+    float turn = 0.0f;
+    float turnAccel=0.05f;
+    float maxTurn=5.0f;
 
     std::cout << "Hello, World Client!" << std::endl;
 
@@ -53,34 +96,42 @@ int main() {
 
         gf::Event event;
         while (window.pollEvent(event)) {
+            actions.processEvent(event);
             switch (event.type) {
                 case gf::EventType::Closed:
                     window.close();
                     networking.stop();
                     break; // TODO: Séparé input & update
-                case gf::EventType::KeyPressed:
-                case gf::EventType::KeyRepeated:
-
-                    if (event.key.keycode == gf::Keycode::Right) {
-                        player.move(100.0f * dt, 0);
-                    }
-                    if (event.key.keycode == gf::Keycode::Left) {
-                        player.move(-100.0f * dt, 0);
-                    }
-                    if (event.key.keycode == gf::Keycode::Up) {
-                        player.move(0, -100.0f * dt);
-                    }
-                    if (event.key.keycode == gf::Keycode::Down) {
-                        player.move(0, 100.0f * dt);
-                    }
-                    break;
                 default:
                     break;
             }
         }
 
+        if ((rotateRight.isActive()==false && rotateLeft.isActive()==false) || (rotateRight.isActive() && rotateLeft.isActive())){
+            turn=0;
+        }else {
+            if ((rotateRight.isActive() && speed>=0) || (rotateLeft.isActive() && speed<0)) turn +=turnAccel;
+            if ((rotateRight.isActive() && speed<0) || (rotateLeft.isActive() && speed>=0)) turn -=turnAccel;
+        }
+        if ((moveForward.isActive()==false && moveBackward.isActive()==false) || (moveForward.isActive() && moveBackward.isActive())){
+            speed=deceleration(speed,accel);
+        }else {
+            if (moveForward.isActive()) speed+=accel;
+            if (moveBackward.isActive()) speed-=accel;
+        }
+        //remise de speed à maxspeed si ça dépasse
+        if (speed>maxSpeed) speed=maxSpeed;
+        if (speed<-maxSpeed) speed=-maxSpeed;
+        //remise de turn à maxTurn si ça dépasse
+        if (turn>maxTurn) turn=maxTurn;
+        if (turn<-maxTurn) turn=-maxTurn;
+
+        player.move(speed*dt,turn*dt);
+
+        actions.reset();
+
         if (tickTimeAccumulator >= (1.0f / 30.0f)) {
-            networking.send(ClientMove{player.x, player.y, player.rot});
+            //networking.send(ClientMove{player.x, player.y, player.rot});
             tickTimeAccumulator = 0.0f;
         }
 
