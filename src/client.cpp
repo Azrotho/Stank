@@ -140,7 +140,9 @@ int main() {
         actions.reset();
 
         if (tickTimeAccumulator >= (1.0f / 30.0f)) {
-            //networking.send(ClientMove{player.x, player.y, player.rot});
+            if (networking.m_isConnected.load()) {
+                networking.send(ClientMove{player.x, player.y, player.rot});
+            }
             tickTimeAccumulator = 0.0f;
         }
 
