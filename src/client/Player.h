@@ -9,8 +9,8 @@
 
 class Player {
 	public:
-		float x = 0;
-		float y = 0;
+		float x = 200;
+		float y = 200;
 		float rot = 0;
 		void move(float forward, float turnTimesDT);
 };

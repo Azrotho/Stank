@@ -85,7 +85,7 @@ int main() {
     text.setColor(gf::Color4f(0.0f,0.0f,0.0f,1.0f));
     text.setPosition({ 100, 100 });
     sprite.setPosition({ player.x, player.y });
-    sprite.setScale(4.0f);
+    sprite.setScale(2.0f);
     sprite.setAnchor(gf::Anchor::Center);
 
     gf::Clock clock;
