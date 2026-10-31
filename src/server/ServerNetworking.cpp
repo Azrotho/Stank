@@ -4,7 +4,11 @@
 
 #include "ServerNetworking.h"
 
+#include <stdexcept>
 #include <thread>
+
+#include "../../gf/include/gf/TcpListener.h"
+#include "../common/Constants.h"
 
 ServerNetworking::ServerNetworking() = default;
 
@@ -13,19 +17,19 @@ void ServerNetworking::start() {
 }
 
 void ServerNetworking::run() {
-    //First: open port to let clients connect
-    int retPort = openPort();
-    if (retPort != 0) {
-        //erreur : à préciser
+    //First: Create TCPListener
+    std::string port = SERVER_PORT;
+    gf::TcpListener listener(port);
+    if (!listener) {
+        throw std::runtime_error("Can not start listener");
     }
-    //once clients connected :
-    int nbClients = 1;//TODO
-    //Second: create a thread for each client
-    for (int i = 0 ; i < nbClients ; i++) {
+    for (;;) {
+        //Second : let clients connect
+        gf::TcpSocket client = listener.accept();
+        if (client) {
+            //Third: wait for clients to do something
 
-    }
-    while (true) {
-        //  //Third: wait for clients to do something
+        }
         //  //Fourth: upon receiving an input, deserialize it and send it to the network thread
         //Fifth: send input to gameLoop
         //Sixth: get gameState/answer from gameLoop
@@ -37,10 +41,6 @@ void ServerNetworking::run() {
 
 void ServerNetworking::stop() {
     //End of the game : disconnect from client, close port, close server
-}
-
-int ServerNetworking::openPort() {
-    return 0;
 }
 
 int ServerNetworking::runClient() {

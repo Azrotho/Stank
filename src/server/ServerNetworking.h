@@ -14,7 +14,6 @@ class ServerNetworking {
     void start();
     void stop();
     void run();
-    int openPort();
     int runClient();
     private:
     std::thread networkThread;
