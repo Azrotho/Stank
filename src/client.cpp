@@ -76,7 +76,7 @@ int main() {
     gf::RenderWindow renderer(window);
     renderer.clear(gf::Color::White);
 
-    gf::Texture texture("sprite/PNG/default/barrelRed_side.png");
+    gf::Texture texture("sprite/PNG/default/tank_red.png");
     gf::Sprite sprite(texture);
 
     gf::Font font("DroidSans.ttf");
@@ -149,7 +149,7 @@ int main() {
         // Draw the entities
         renderer.clear();
         sprite.setPosition({ player.x, player.y });
-        sprite.setRotation((float) (player.rot*(M_PI/180.0f)));
+        sprite.setRotation((float) ((player.rot-90)*(M_PI/180.0f)));
         renderer.draw(sprite);
         renderer.draw(text);
         renderer.display();
