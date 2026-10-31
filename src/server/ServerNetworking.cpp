@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include <thread>
 
-#include "../../gf/include/gf/TcpListener.h"
+#include <gf/TcpListener.h>
 #include "../common/Constants.h"
 
 ServerNetworking::ServerNetworking() = default;
