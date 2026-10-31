@@ -6,6 +6,10 @@
 #define STANK_SERVERNETWORKING_H
 
 #include <thread>
+#include <gf/SocketSelector.h>
+#include <gf/TcpListener.h>
+
+#include "GameState.h"
 
 
 class ServerNetworking {
@@ -17,6 +21,10 @@ class ServerNetworking {
     int runClient();
     private:
     std::thread networkThread;
+
+    gf::SocketSelector m_selector;
+    GameState m_gameState;
+
 };
 
 

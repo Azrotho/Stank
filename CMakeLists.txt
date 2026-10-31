@@ -49,6 +49,8 @@ add_executable(stank_server
         src/common/Protocol.h
         src/server/ServerUtility.cpp
         src/server/ServerUtility.h
+        src/server/serverPlayer.cpp
+        src/server/serverPlayer.h
 )
 
 target_link_libraries(stank_server

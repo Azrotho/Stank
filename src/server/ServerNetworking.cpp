@@ -4,10 +4,11 @@
 
 #include "ServerNetworking.h"
 
+#include <iostream>
 #include <stdexcept>
 #include <thread>
 
-#include "../../gf/include/gf/TcpListener.h"
+#include "serverPlayer.h"
 #include "../common/Constants.h"
 
 ServerNetworking::ServerNetworking() = default;
@@ -23,17 +24,44 @@ void ServerNetworking::run() {
     if (!listener) {
         throw std::runtime_error("Can not start listener");
     }
+    //TODO : This player is temporary, we'll need to modify this
+    ServerPlayer player;
+    bool needsDisconnection = false;
     for (;;) {
-        //Second : let clients connect
-        gf::TcpSocket client = listener.accept();
-        if (client) {
-            //Third: wait for clients to do something
 
+        //On répète cette boucle pour chaque joueur jusqu'à ///
+        if (m_selector.isReady(player.socket)) {
+            gf::Packet packet;
+
+            switch (player.socket.recvPacket(packet)) {
+                case gf::SocketStatus::Data:
+                    switch (packet.getType()) {
+                        /*case ClientDisconnect::type:
+                            needsDisconnection = true;
+                            break; //Pas compris où trouver ceci*/
+                        default:
+                            m_gameState.update(std::move(player), packet);
+                    }
+                    break;
+                case gf::SocketStatus::Error:
+                    break;
+                case gf::SocketStatus::Close:
+                    needsDisconnection = true;
+                    break;
+                case gf::SocketStatus::Block:
+                    break;
+            }
         }
-        //  //Fourth: upon receiving an input, deserialize it and send it to the network thread
-        //Fifth: send input to gameLoop
-        //Sixth: get gameState/answer from gameLoop
-        //  //Seventh: send gameState to each client
+        //Jusqu'ici
+
+        if (m_selector.isReady(listener)){
+        gf::TcpSocket socket = listener.accept();
+
+        if (!socket){
+            continue;
+        }
+        
+
     }
 
     stop();
