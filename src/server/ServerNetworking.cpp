@@ -11,19 +11,23 @@
 #include "serverPlayer.h"
 #include "../common/Constants.h"
 
-ServerNetworking::ServerNetworking() = default;
+ServerNetworking::ServerNetworking(gf::Random& random)
+:m_random(random)
+,m_listener(Service)
+{
+    if (!m_listener) {
+        throw std::runtime_error("Can not start listener");
+    }
+    m_selector.addSocket(m_listener);
+
+    gf::Log::info("(SERVER) Waiting for connections on port %s...\n", Service);
+}
 
 void ServerNetworking::start() {
     networkThread = std::thread(&ServerNetworking::run, this);
 }
 
 void ServerNetworking::run() {
-    //First: Create TCPListener
-    std::string port = SERVER_PORT;
-    gf::TcpListener listener(port);
-    if (!listener) {
-        throw std::runtime_error("Can not start listener");
-    }
     //TODO : This player is temporary, we'll need to modify this
     ServerPlayer player;
     bool needsDisconnection = false;
@@ -54,23 +58,35 @@ void ServerNetworking::run() {
         }
         //Jusqu'ici
 
-        if (m_selector.isReady(listener)){
-        gf::TcpSocket socket = listener.accept();
+        if (m_selector.isReady(m_listener)) {
+            gf::TcpSocket socket = m_listener.accept();
 
-        if (!socket){
-            continue;
+            if (!socket){
+                continue;
+            }
+
+            gf::Id id = m_random.get().computeId();
+            ServerPlayer playerInstance;
+            playerInstance.id = id;
+            playerInstance.name = "";
+            playerInstance.socket = std::move(socket);
+
+            m_selector.addSocket(playerInstance.socket);
+
         }
-        
+
+
 
     }
 
     stop();
 }
 
+/*
 void ServerNetworking::stop() {
     //End of the game : disconnect from client, close port, close server
 }
 
 int ServerNetworking::runClient() {
     return 0;
-}
+}*/

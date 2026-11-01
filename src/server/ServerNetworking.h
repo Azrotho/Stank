@@ -8,22 +8,25 @@
 #include <thread>
 #include <gf/SocketSelector.h>
 #include <gf/TcpListener.h>
-
+#include <gf/Random.h>
+#include <gf/Ref.h>
+#include <gf/Log.h>
 #include "GameState.h"
 
 
 class ServerNetworking {
     public:
-    ServerNetworking();
+    ServerNetworking(gf::Random& random);
     void start();
     void stop();
     void run();
     int runClient();
     private:
     std::thread networkThread;
-
+    gf::TcpListener m_listener;
     gf::SocketSelector m_selector;
     GameState m_gameState;
+    gf::Ref<gf::Random> m_random;
 
 };
 
