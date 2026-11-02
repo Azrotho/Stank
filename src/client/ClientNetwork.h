@@ -2,6 +2,9 @@
 // Created by azrotho on 17/10/2026.
 //
 
+// Un grand merci au fichier https://github.com/Hatunruna/ggj2020/blob/master/code/bits/client/ClientNetwork.cc kekw
+// sinon impossible kekw
+
 #ifndef STANK_NETWORKING_H
 #define STANK_NETWORKING_H
 
