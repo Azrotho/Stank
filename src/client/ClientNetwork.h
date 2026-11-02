@@ -11,6 +11,7 @@
 #include <gf/Queue.h>
 #include <gf/Packet.h>
 #include <gf/TcpSocket.h>
+#include <gf/Log.h>
 
 #include "../common/Constants.h"
 #include "../common/Protocol.h"

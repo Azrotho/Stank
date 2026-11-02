@@ -32,7 +32,33 @@ void ClientNetwork::run() {
 
 	while (!m_shouldStop.load()) {
 		// TODO: Boucle recevoir les paquets.
+		gf::Packet packet;
 
+		if (!m_socket) {
+			gf::Log::error("Socket is not connected\n");
+			m_isConnected.store(false);
+			m_shouldStop.store(true);
+			return;
+		}
+
+		switch (m_socket.recvPacket(packet)) {
+			case gf::SocketStatus::Data:
+				queue.push(std::move(packet));
+				break;
+			case gf::SocketStatus::Error:
+				gf::Log::error("Error while receiving a packet from server\n");
+				m_isConnected.store(false);
+				m_shouldStop.store(true);
+				return;
+			case gf::SocketStatus::Close:
+				gf::Log::info("End of connection to the server\n");
+				m_isConnected.store(false);
+				m_shouldStop.store(true);
+				return;
+			case gf::SocketStatus::Block:
+				assert(false);
+				break;
+		}
 	}
 }
 
