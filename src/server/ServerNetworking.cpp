@@ -7,25 +7,23 @@
 #include <stdexcept>
 #include <thread>
 
-#include <gf/TcpListener.h>
+#include "../../gf/include/gf/TcpListener.h"
 #include "../common/Constants.h"
 
-ServerNetworking::ServerNetworking() = default;
-
-void ServerNetworking::start() {
-    networkThread = std::thread(&ServerNetworking::run, this);
+ServerNetworking::ServerNetworking(gf::Random& random)
+: m_random(random)
+, m_listener(Service)
+{
+    if (!m_listener) {
+        throw std::runtime_error("Can not start listener.");
+    }
+    m_selector.addSocket(m_listener);
+    gf::Log::info("(SERVER) Waiting for connections on port %s...\n", Service);
 }
 
 void ServerNetworking::run() {
-    //First: Create TCPListener
-    std::string port = SERVER_PORT;
-    gf::TcpListener listener(port);
-    if (!listener) {
-        throw std::runtime_error("Can not start listener");
-    }
-    for (;;) {
-        //Second : let clients connect
-        gf::TcpSocket client = listener.accept();
+    while (g_running){
+        gf::TcpSocket client = m_listener.accept();
         if (client) {
             //Third: wait for clients to do something
 
@@ -35,14 +33,5 @@ void ServerNetworking::run() {
         //Sixth: get gameState/answer from gameLoop
         //  //Seventh: send gameState to each client
     }
-
-    stop();
 }
 
-void ServerNetworking::stop() {
-    //End of the game : disconnect from client, close port, close server
-}
-
-int ServerNetworking::runClient() {
-    return 0;
-}

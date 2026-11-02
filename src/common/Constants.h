@@ -9,5 +9,6 @@
 
 const std::string SERVER_IP = "127.0.0.1"; // To be deprecated
 const std::string SERVER_PORT = "13915"; // To be deprecated
+constexpr const char* Service = "13915";
 
 #endif //STANK_CONSTANTS_H

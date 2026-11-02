@@ -6,17 +6,28 @@
 #define STANK_SERVERNETWORKING_H
 
 #include <thread>
+#include <gf/SocketSelector.h>
+#include <gf/TcpListener.h>
+#include <gf/Random.h>
+#include <gf/Ref.h>
+#include <gf/Log.h>
+#include "GameState.h"
+#include <atomic>
 
 
 class ServerNetworking {
     public:
-    ServerNetworking();
-    void start();
-    void stop();
+    ServerNetworking(gf::Random& random);
     void run();
-    int runClient();
     private:
     std::thread networkThread;
+    gf::TcpListener m_listener;
+    gf::SocketSelector m_selector;
+    GameState m_gameState;
+    gf::Ref<gf::Random> m_random;
+    std::map<gf::Id, ServerPlayer> m_players;
+    static std::atomic_bool g_running;
+
 };
 
 
