@@ -12,21 +12,21 @@
 #include <gf/Ref.h>
 #include <gf/Log.h>
 #include "GameState.h"
+#include <atomic>
 
 
 class ServerNetworking {
     public:
     ServerNetworking(gf::Random& random);
-    void start();
-    void stop();
     void run();
-    int runClient();
     private:
     std::thread networkThread;
     gf::TcpListener m_listener;
     gf::SocketSelector m_selector;
     GameState m_gameState;
     gf::Ref<gf::Random> m_random;
+    std::map<gf::Id, ServerPlayer> m_players;
+    static std::atomic_bool g_running;
 
 };
 
