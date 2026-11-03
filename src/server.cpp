@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <thread>
+#include "server/ServerNetworking.h"
 #include "common/Constants.h"
 #include "server/ServerNetworking.h"
 
@@ -32,7 +33,7 @@ int main() {
 
     std::thread networkingThread(&ServerNetworking::run, &networking);
     networkingThread.join();
-
     std::cout << "Hello, World Server!" << std::endl;
+
     return 0;
 }

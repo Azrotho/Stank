@@ -31,6 +31,10 @@ struct ClientMove {
 	float rot;
 };
 
+struct ClientDisconnect {
+	static constexpr gf::Id type = "ClientDisconnect"_id;
+};
+
 template <typename Archive>
 Archive& operator|(Archive& ar, ClientMove& data) {
 	return ar | data.x | data.y | data.rot;
