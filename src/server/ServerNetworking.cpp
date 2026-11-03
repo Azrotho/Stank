@@ -91,11 +91,11 @@ void ServerNetworking::run() {
             gf::Log::info("(SERVER) {%" PRIX64 "} Connected.\n", player.id);
 
             if (!purgatory.empty()) {
-                for (auto id : purgatory) {
-                    auto it = m_players.find(id);
+                for (auto idPurgatory : purgatory) {
+                    auto it = m_players.find(idPurgatory);
                     assert(it != m_players.end());
-                    auto& player = it->second;
-                    m_selector.removeSocket(player.socket);
+                    auto& playerPurgatory = it->second;
+                    m_selector.removeSocket(playerPurgatory.socket);
                     //TODO retirer le joueur du ServerLobby
                     m_players.erase(it);
                 }
@@ -105,3 +105,10 @@ void ServerNetworking::run() {
     }
 }
 
+void ServerNetworking::signalHandler(int sig) {
+    assert(sig == SIGINT);
+    g_running = false;
+}
+
+
+std::atomic_bool ServerNetworking::g_running(true);

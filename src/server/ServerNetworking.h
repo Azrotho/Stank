@@ -5,7 +5,6 @@
 #ifndef STANK_SERVERNETWORKING_H
 #define STANK_SERVERNETWORKING_H
 
-#include <thread>
 #include <gf/SocketSelector.h>
 #include <gf/TcpListener.h>
 #include <gf/Random.h>
@@ -19,14 +18,18 @@ class ServerNetworking {
     public:
     ServerNetworking(gf::Random& random);
     void run();
+
     private:
-    std::thread networkThread;
+    static void signalHandler(int sig);
+
+
+    private:
+    gf::Ref<gf::Random> m_random;
     gf::TcpListener m_listener;
     gf::SocketSelector m_selector;
     ServerLobby m_lobby;
-    gf::Ref<gf::Random> m_random;
     std::map<gf::Id, ServerPlayer> m_players;
-	  std::atomic_bool g_running;
+    static std::atomic_bool g_running;
 
 };
 
