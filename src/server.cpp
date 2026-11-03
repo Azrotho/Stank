@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <thread>
+#include "server/ServerNetworking.h"
 #include "common/Constants.h"
 
 int receive(){
@@ -25,7 +26,11 @@ int gameLoop(){
 }
 
 int main() {
-    std::thread mainThread (gameLoop);
-    std::cout << "Hello, World Server!" << std::endl;
+    //std::thread mainThread (gameLoop);
+    gf::Random random = gf::Random();
+    ServerNetworking networking = ServerNetworking(random);
+
+    std::thread networkingThread(&ServerNetworking::run, &networking);
+    networkingThread.join();    std::cout << "Hello, World Server!" << std::endl;
     return 0;
 }

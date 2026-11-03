@@ -8,7 +8,8 @@
 #include <stdexcept>
 #include <cinttypes>
 
-#include "../../gf/include/gf/TcpListener.h"
+#include "../common/Protocol.h"
+#include <gf/TcpListener.h>
 #include <gf/Log.h>
 #include "../common/Constants.h"
 
@@ -46,10 +47,10 @@ void ServerNetworking::run() {
                 switch (player.socket.recvPacket(packet)) {
                     case gf::SocketStatus::Data:
                         switch (packet.getType()) {
-                            /*case ClientDisconnect::type:
+                            case ClientDisconnect::type:
                                 gf::Log::info("(SERVER) {%" PRIX64 "} Disconnected.\n", player.id);
                                 purgatory.push_back(player.id);
-                                break;*/
+                                break;
                             default:
                                 //TODO update le lobby
                                 break;
