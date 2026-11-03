@@ -51,6 +51,8 @@ add_executable(stank_server
         src/server/ServerUtility.h
         src/server/serverPlayer.cpp
         src/server/serverPlayer.h
+        src/server/ServerLobby.cpp
+        src/server/ServerLobby.h
 )
 
 target_link_libraries(stank_server

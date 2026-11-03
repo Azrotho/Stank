@@ -10,9 +10,9 @@
 #include <gf/TcpListener.h>
 #include <gf/Random.h>
 #include <gf/Ref.h>
-#include <gf/Log.h>
 #include "GameState.h"
 #include <atomic>
+#include "ServerLobby.h"
 
 
 class ServerNetworking {
@@ -23,7 +23,7 @@ class ServerNetworking {
     std::thread networkThread;
     gf::TcpListener m_listener;
     gf::SocketSelector m_selector;
-    GameState m_gameState;
+    ServerLobby m_lobby;
     gf::Ref<gf::Random> m_random;
     std::map<gf::Id, ServerPlayer> m_players;
     static std::atomic_bool g_running;
