@@ -6,6 +6,7 @@
 #include <thread>
 #include "server/ServerNetworking.h"
 #include "common/Constants.h"
+#include "server/ServerNetworking.h"
 
 int receive(){
     return 0;
@@ -31,6 +32,8 @@ int main() {
     ServerNetworking networking = ServerNetworking(random);
 
     std::thread networkingThread(&ServerNetworking::run, &networking);
-    networkingThread.join();    std::cout << "Hello, World Server!" << std::endl;
+    networkingThread.join();
+    std::cout << "Hello, World Server!" << std::endl;
+
     return 0;
 }

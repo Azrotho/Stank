@@ -26,7 +26,7 @@ class ServerNetworking {
     ServerLobby m_lobby;
     gf::Ref<gf::Random> m_random;
     std::map<gf::Id, ServerPlayer> m_players;
-    static std::atomic_bool g_running;
+	  std::atomic_bool g_running;
 
 };
 
