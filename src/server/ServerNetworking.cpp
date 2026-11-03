@@ -8,7 +8,6 @@
 #include <stdexcept>
 #include <cinttypes>
 
-#include "../../gf/include/gf/TcpListener.h"
 #include <gf/Log.h>
 #include "../common/Constants.h"
 
