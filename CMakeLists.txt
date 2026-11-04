@@ -71,6 +71,8 @@ set_target_properties(stank_server
         CXX_EXTENSIONS OFF
 )
 
+target_include_directories(stank_server PRIVATE vendor/box2d)
+
 add_custom_command(TARGET stank POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${CMAKE_CURRENT_SOURCE_DIR}/data/stank"
