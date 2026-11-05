@@ -31,7 +31,6 @@ void ClientNetwork::run() {
 	send(ClientHello{});
 
 	while (!m_shouldStop.load()) {
-		// TODO: Boucle recevoir les paquets.
 		gf::Packet packet;
 
 		if (!m_socket) {
