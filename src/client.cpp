@@ -19,13 +19,6 @@
 #include "client/ClientNetwork.h"
 #include "client/Player.h"
 
-static float deceleration(float speed,float accel) {
-    if (speed>-2.0f && speed<2.0f) speed=0;
-    if (speed>0) speed-=accel;
-    if (speed<0)speed+=accel;
-    return speed;
-}
-
 int main() {
 
     //set les touches :
@@ -57,14 +50,6 @@ int main() {
 
     float tickTimeAccumulator = 0.0f;
 
-    //variables pour la vitesse
-    float accel = 0.05f;
-    float speed = 0.0f;
-    float maxSpeed = 25.0f;
-    float turn = 0.0f;
-    float turnAccel=0.05f;
-    float maxTurn=5.0f;
-
     std::cout << "Hello, World Client!" << std::endl;
 
     ClientNetwork networking;
@@ -84,7 +69,7 @@ int main() {
     gf::Text text("Hello gf!", font, 50);
     text.setColor(gf::Color4f(0.0f,0.0f,0.0f,1.0f));
     text.setPosition({ 100, 100 });
-    sprite.setPosition({ player.x, player.y });
+    sprite.setPosition({ player.getX(), player.getY() });
     sprite.setScale(2.0f);
     sprite.setAnchor(gf::Anchor::Center);
 
@@ -115,41 +100,20 @@ int main() {
         } else {
             text.setString("Connexion KO");
         }
-
-        //déplacements
-        if ((rotateRight.isActive()==false && rotateLeft.isActive()==false) || (rotateRight.isActive() && rotateLeft.isActive())){
-            turn=0;
-        }else {
-            if ((rotateRight.isActive() && speed>=0) || (rotateLeft.isActive() && speed<0)) turn +=turnAccel;
-            if ((rotateRight.isActive() && speed<0) || (rotateLeft.isActive() && speed>=0)) turn -=turnAccel;
-        }
-        if ((moveForward.isActive()==false && moveBackward.isActive()==false) || (moveForward.isActive() && moveBackward.isActive())){
-            speed=deceleration(speed,accel);
-        }else {
-            if (moveForward.isActive()) speed+=accel;
-            if (moveBackward.isActive()) speed-=accel;
-        }
-        //remise de speed à maxspeed si ça dépasse
-        if (speed>maxSpeed) speed=maxSpeed;
-        if (speed<-maxSpeed) speed=-maxSpeed;
-        //remise de turn à maxTurn si ça dépasse
-        if (turn>maxTurn) turn=maxTurn;
-        if (turn<-maxTurn) turn=-maxTurn;
-
-        player.move(speed*dt,turn*dt);
+        player.move(moveForward.isActive(),moveBackward.isActive(),rotateRight.isActive(),rotateLeft.isActive(),dt);
         actions.reset();
 
         if (tickTimeAccumulator >= (1.0f / 30.0f)) {
             if (networking.m_isConnected.load()) {
-                networking.send(ClientMove{player.x, player.y, player.rot});
+                networking.send(ClientMove{player.getX(), player.getY(), player.getRotation()});
             }
             tickTimeAccumulator = 0.0f;
         }
 
         // Draw the entities
         renderer.clear();
-        sprite.setPosition({ player.x, player.y });
-        sprite.setRotation((float) ((player.rot-90)*(M_PI/180.0f)));
+        sprite.setPosition({ player.getX(), player.getY() });
+        sprite.setRotation((float) ((player.getRotation()-90)*(M_PI/180.0f)));
         renderer.draw(sprite);
         renderer.draw(text);
         renderer.display();
