@@ -19,7 +19,7 @@ void Player::move(bool forward,bool backward,bool right,bool left,float dt){
         }else if(speed==0){
             speed=1.0f;
         }else{
-            deceleration(dt);
+            speed=0;
         }
     }else if(backward && !forward){
         if(speed<0){
@@ -27,12 +27,11 @@ void Player::move(bool forward,bool backward,bool right,bool left,float dt){
         }else if(speed==0){
             speed=-1.0f;
         }else{
-            deceleration(dt);
+            speed=0;
         }
     }else{
         deceleration(dt);
     }
-
 
     if(right && !left){
         turn+=turnAccel*dt;
@@ -45,11 +44,15 @@ void Player::move(bool forward,bool backward,bool right,bool left,float dt){
     //remise de speed à maxspeed si ça dépasse
     if (speed>maxSpeed) speed=maxSpeed;
     if (speed<-maxSpeed) speed=-maxSpeed;
+
     //remise de turn à maxTurn si ça dépasse
     if (turn>maxTurn) turn=maxTurn;
     if (turn<-maxTurn) turn=-maxTurn;
+
     //affectation de la position du tank
-    rot+=turn;
+    float realTurn=turn;
+    if(speed<0) realTurn=-realTurn;
+    rot+=realTurn*dt;
     double rad = rot * (M_PI/180.0f);
     x += (float) (cos(rad)*(speed*dt));
     y += (float) (sin(rad)*(speed*dt));

@@ -31,8 +31,8 @@ class Player {
 		float maxSpeed = 100.0f;
 		//variables pour tourner
 		float turn = 0.0f;
-		float turnAccel=0.3f;
-		float maxTurn=0.1f;
+		float turnAccel=300.0f;
+		float maxTurn=150.0f;
 };
 
 
