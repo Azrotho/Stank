@@ -5,12 +5,20 @@
 #include "Player.h"
 
 void Player::deceleration(float dt) {
-    if (speed>-2.0f && speed<2.0f) speed=0;
+    if (speed>-10.0f && speed<10.0f){
+        speed=0;
+    }
     if (speed>0) speed-=(accel*dt)*5;
     if (speed<0) speed+=(accel*dt)*5;
 }
 
+bool Player::whatDir(){
+    if(speed>=0)return true;
+    return false;
+}
+
 void Player::move(bool forward,bool backward,bool right,bool left,float dt){
+    bool previousDir=whatDir();
     //j'ai trouvé ceci
     //https://www.reddit.com/r/gamedev/comments/6j8ovg/acceleration_why_pos_vel_dt_vel_acc_dt/
     if(forward && !backward){
@@ -19,7 +27,7 @@ void Player::move(bool forward,bool backward,bool right,bool left,float dt){
         }else if(speed==0){
             speed=1.0f;
         }else{
-            speed=0;
+            deceleration(dt);
         }
     }else if(backward && !forward){
         if(speed<0){
@@ -27,11 +35,15 @@ void Player::move(bool forward,bool backward,bool right,bool left,float dt){
         }else if(speed==0){
             speed=-1.0f;
         }else{
-            speed=0;
+            deceleration(dt);
         }
     }else{
         deceleration(dt);
     }
+    bool currentDir=whatDir();
+
+    //previousDir et currentDir permettent de pas juste de passer de turn=100 à turn=-100 net et c'est vachement plus sympa à jouer
+    if(currentDir != previousDir) turn=0;
 
     if(right && !left){
         turn+=turnAccel*dt;
