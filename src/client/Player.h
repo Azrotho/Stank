@@ -5,11 +5,16 @@
 #ifndef STANK_PLAYER_H
 #define STANK_PLAYER_H
 
+#include <gf/Sprite.h>
+#include <gf/Texture.h>
 #include <cmath>
 
 class Player {
 	public:
 		void move(bool forward,bool backward,bool right,bool left,float dt);
+		//renvoie true si un obus a été créé
+		//renvoie false sinon
+		bool shoot(); // pas encore implem
 		float getX();
 		float getY();
 		float getRotation();
@@ -21,7 +26,7 @@ class Player {
 		
 	private :
 		void deceleration(float dt);
-		void acceleration(bool dir,float dt);
+		bool whatDir();
 		float x = 200;
 		float y = 200;
 		float rot = 0;
@@ -33,6 +38,18 @@ class Player {
 		float turn = 0.0f;
 		float turnAccel=300.0f;
 		float maxTurn=150.0f;
+		//frein
+		float brake=200.0f;
+
+		//stats de bases
+		float pv=100.0f;
+		float pvMax=100.0f;
+		float damages=50.0f;
+	    float reloadTime=3.0f;
+
+
+		gf::Texture texture;
+    	gf::Sprite sprite;
 };
 
 
