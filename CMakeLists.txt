@@ -4,7 +4,7 @@
 #   cmake ..
 #   make
 #
-cmake_minimum_required(VERSION 3.10.2)
+cmake_minimum_required(VERSION 3.22)
 
 project(STANK
     VERSION 0.1.0)
@@ -17,7 +17,12 @@ add_executable(stank src/client.cpp
         src/client/Player.cpp
         src/common/Protocol.h)
 
+
+add_subdirectory(vendor/box2d)
+
+
 find_package(gf 1.2.0 REQUIRED COMPONENTS graphics net)
+find_package(box2d 3.2.0 REQUIRED)
 
 
 target_link_libraries(stank
@@ -56,6 +61,8 @@ add_executable(stank_server
 )
 
 target_link_libraries(stank_server
+        PUBLIC
+        box2d::box2d
         PRIVATE
         gf::net
 )
@@ -71,7 +78,6 @@ set_target_properties(stank_server
         CXX_EXTENSIONS OFF
 )
 
-target_include_directories(stank_server PRIVATE vendor/box2d)
 
 add_custom_command(TARGET stank POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
