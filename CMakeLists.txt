@@ -22,7 +22,7 @@ add_subdirectory(vendor/box2d)
 
 
 find_package(gf 1.2.0 REQUIRED COMPONENTS graphics net)
-find_package(box2d 3.2.0 REQUIRED)
+#find_package(box2d 3.2.0 REQUIRED)
 
 
 target_link_libraries(stank
