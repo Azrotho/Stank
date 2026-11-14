@@ -7,6 +7,7 @@
 #include "server/ServerNetworking.h"
 #include "common/Constants.h"
 #include "server/ServerNetworking.h"
+#include <box2d/box2d.h>
 
 int receive(){
     return 0;
