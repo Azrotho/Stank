@@ -4,23 +4,21 @@
 
 class TankShell {
 	public:
-    
 		TankShell(float x, float y, float rotation,float tankDamages);
 
 		void move(float dt);
-		float getX();
-		float getY();
-		float getRotation();
-		float getSpeed();
-        float getDamages();
+		float getX() const;
+		float getY() const;
+		float getRotation() const;
+		float getSpeed() const;
+        float getDamages() const;
 
         void setRotation(float newRotation);
-        void setX(float x);
-        void setY(float y);
+        void setX(float newX);
+        void setY(float newY);
         void setDamages(float tankDamages);
 		
 	private :
-		void deceleration(float dt);
 		float x = 200;
 		float y = 200;
 		float rot = 0;
@@ -28,6 +26,8 @@ class TankShell {
 		float speed = 0.0f;
         
         float damages=0.0f;
+		float distanceToMake=100.0f;
+		float distanceMake=0.0f;
 
 };
 

@@ -3,6 +3,13 @@
 //
 
 #include "Player.h"
+//branchez vous liste d'initialisation, ça sauve des vies à ce qu'il parait
+//https://www.reddit.com/r/Cplusplus/comments/10z8e5e/what_is_the_difference_between_the_member/?tl=fr
+Player::Player(float cx,float cy, float crot, gf::Texture text) : texture(std::move(text)), sprite(texture) {
+    setX(cx);
+    setY(cy);
+    setRotation(crot);
+}
 
 void Player::deceleration(float dt) {
     if (speed>-10.0f && speed<10.0f){
@@ -68,6 +75,8 @@ void Player::move(bool forward,bool backward,bool right,bool left,float dt){
     double rad = rot * (M_PI/180.0f);
     x += (float) (cos(rad)*(speed*dt));
     y += (float) (sin(rad)*(speed*dt));
+    float spriteRot = (rot-90)* (M_PI/180.0f);
+    setSprite(x,y,spriteRot,2.0f);
 }
 
 /******************************
@@ -77,15 +86,15 @@ void Player::move(bool forward,bool backward,bool right,bool left,float dt){
 ******************************/
 
 
-float Player::getX(){
+float Player::getX() const{
     return x;
 }
 
-float Player::getY(){
+float Player::getY() const{
     return y;
 }
 
-float Player::getRotation(){
+float Player::getRotation() const{
     return rot;
 }
 
@@ -101,6 +110,17 @@ void Player::setRotation(float newRotation){
     rot=newRotation;
 }
 
-float Player::getSpeed(){
+float Player::getSpeed() const{
     return speed;
+}
+
+void Player::setSprite(float posX,float posY, float rad, float scale){
+    sprite.setPosition({posX,posY});
+    sprite.setScale(scale);
+    sprite.setRotation(rad);
+    sprite.setAnchor(gf::Anchor::Center);
+}
+
+gf::Sprite Player::getSprite(){
+    return sprite;
 }

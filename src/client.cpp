@@ -55,23 +55,17 @@ int main() {
     ClientNetwork networking;
     networking.start();
 
-    Player player;
-
     gf::Window window("Stank", { 640, 480 });
     gf::RenderWindow renderer(window);
     renderer.clear(gf::Color::White);
 
-    gf::Texture texture("sprite/PNG/default/tank_red.png");
-    gf::Sprite sprite(texture);
+    Player player(200,200,0, gf::Texture("sprite/PNG/default/tank_red.png"));
 
     gf::Font font("DroidSans.ttf");
 
     gf::Text text("Hello gf!", font, 50);
     text.setColor(gf::Color4f(0.0f,0.0f,0.0f,1.0f));
     text.setPosition({ 100, 100 });
-    sprite.setPosition({ player.getX(), player.getY() });
-    sprite.setScale(2.0f);
-    sprite.setAnchor(gf::Anchor::Center);
 
     gf::Clock clock;
 
@@ -112,9 +106,8 @@ int main() {
 
         // Draw the entities
         renderer.clear();
-        sprite.setPosition({ player.getX(), player.getY() });
-        sprite.setRotation((float) ((player.getRotation()-90)*(M_PI/180.0f)));
-        renderer.draw(sprite);
+        gf::Sprite s=player.getSprite();
+        renderer.draw(s);
         renderer.draw(text);
         renderer.display();
     }

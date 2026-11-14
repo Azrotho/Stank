@@ -15,7 +15,9 @@ add_executable(stank src/client.cpp
         src/client/ClientNetwork.cpp
         src/client/Player.h
         src/client/Player.cpp
-        src/common/Protocol.h)
+        src/common/Protocol.h
+        src/client/TankShell.cpp
+        src/client/TankShell.h)
 
 
 add_subdirectory(vendor/box2d)

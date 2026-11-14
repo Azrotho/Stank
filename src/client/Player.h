@@ -11,14 +11,16 @@
 
 class Player {
 	public:
+		Player(float x, float y, float rot, gf::Texture text);
 		void move(bool forward,bool backward,bool right,bool left,float dt);
 		//renvoie true si un obus a été créé
 		//renvoie false sinon
 		bool shoot(); // pas encore implem
-		float getX();
-		float getY();
-		float getRotation();
-		float getSpeed();
+		float getX() const;
+		float getY() const;
+		float getRotation() const;
+		float getSpeed() const;
+		gf::Sprite getSprite();
 
 		void setX(float newX);
 		void setY(float newY);
@@ -27,9 +29,7 @@ class Player {
 	private :
 		void deceleration(float dt);
 		bool whatDir();
-		float x = 200;
-		float y = 200;
-		float rot = 0;
+		void setSprite(float posX, float posY,float rad, float scale);
 		//variables pour la vitesse
 		float accel = 70.0f;
 		float speed = 0.0f;
@@ -48,8 +48,13 @@ class Player {
 	    float reloadTime=3.0f;
 
 
+		float x;
+		float y;
+		float rot;
+
 		gf::Texture texture;
     	gf::Sprite sprite;
+
 };
 
 
