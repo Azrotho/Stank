@@ -59,7 +59,7 @@ int main() {
     gf::RenderWindow renderer(window);
     renderer.clear(gf::Color::White);
 
-    Player player(200,200,0, gf::Texture("sprite/PNG/default/tank_red.png"));
+    Player player(200,200,0, "sprite/PNG/default/tank_red.png");
 
     gf::Font font("DroidSans.ttf");
 

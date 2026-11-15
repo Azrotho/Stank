@@ -5,10 +5,10 @@
 #include "Player.h"
 //branchez vous liste d'initialisation, ça sauve des vies à ce qu'il parait
 //https://www.reddit.com/r/Cplusplus/comments/10z8e5e/what_is_the_difference_between_the_member/?tl=fr
-Player::Player(float cx,float cy, float crot, gf::Texture text) : texture(std::move(text)), sprite(texture) {
-    setX(cx);
-    setY(cy);
-    setRotation(crot);
+Player::Player(float cx,float cy, float crot, std::string text) : texture(text), sprite(texture) {
+    x=cx;
+    y=cy;
+    rot=crot;
 }
 
 void Player::deceleration(float dt) {

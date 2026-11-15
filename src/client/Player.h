@@ -7,11 +7,12 @@
 
 #include <gf/Sprite.h>
 #include <gf/Texture.h>
+#include <string>
 #include <cmath>
 
 class Player {
 	public:
-		Player(float x, float y, float rot, gf::Texture text);
+		Player(float x, float y, float rot, std::string text);
 		void move(bool forward,bool backward,bool right,bool left,float dt);
 		//renvoie true si un obus a été créé
 		//renvoie false sinon
