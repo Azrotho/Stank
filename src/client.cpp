@@ -99,7 +99,7 @@ int main() {
 
         if (tickTimeAccumulator >= (1.0f / 30.0f)) {
             if (networking.m_isConnected.load()) {
-                networking.send(ClientMove{player.getX(), player.getY(), player.getRotation()});
+                //networking.send(ClientMove{player.getX(), player.getY(), player.getRotation()});
             }
             tickTimeAccumulator = 0.0f;
         }
