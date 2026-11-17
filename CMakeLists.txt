@@ -17,7 +17,9 @@ add_executable(stank src/client.cpp
         src/client/Player.cpp
         src/common/Protocol.h
         src/client/TankShell.cpp
-        src/client/TankShell.h)
+        src/client/TankShell.h
+        src/common/Enums.h
+        src/common/Struct.h)
 
 
 add_subdirectory(vendor/box2d)
@@ -60,6 +62,8 @@ add_executable(stank_server
         src/server/ServerPlayer.h
         src/server/ServerLobby.cpp
         src/server/ServerLobby.h
+        src/common/Enums.h
+        src/common/Struct.h
 )
 
 target_link_libraries(stank_server

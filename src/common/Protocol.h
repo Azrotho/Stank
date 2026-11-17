@@ -44,4 +44,21 @@ Archive& operator|(Archive& ar, ClientMove& data) {
  * Server --> Client packets
  */
 
+struct ServerHello {
+	static constexpr gf::Id type = "ServerHello"_id;
+	gf::Id id;
+};
+
+template<typename Archive>
+Archive& operator|(Archive& ar, ServerHello& data) {
+	return ar | data.id;
+}
+
+struct ServerTankUpdate {
+	static constexpr gf::Id type = "ServerTankUpdate"_id;
+	float x;
+	float y;
+	float rot;
+};
+
 #endif //STANK_PROTOCOL_H
