@@ -9,6 +9,8 @@
 #include <gf/Id.h>
 #include <gf/SerializationOps.h>
 
+#include "Struct.h"
+
 using namespace gf::literals;
 
 /*
@@ -26,19 +28,20 @@ Archive& operator|(Archive& ar, ClientHello& data) {
 
 struct ClientMove {
 	static constexpr gf::Id type = "ClientMove"_id;
-	float x;
-	float y;
-	float rot;
+	TankControls controls;
 };
+
+template <typename Archive>
+Archive& operator|(Archive& ar, ClientMove& data) {
+	return ar | data.controls;
+}
+
 
 struct ClientDisconnect {
 	static constexpr gf::Id type = "ClientDisconnect"_id;
 };
 
-template <typename Archive>
-Archive& operator|(Archive& ar, ClientMove& data) {
-	return ar | data.x | data.y | data.rot;
-}
+
 
 /*
  * Server --> Client packets
@@ -46,7 +49,7 @@ Archive& operator|(Archive& ar, ClientMove& data) {
 
 struct ServerHello {
 	static constexpr gf::Id type = "ServerHello"_id;
-	gf::Id id;
+	gf::Id id; // donner un id
 };
 
 template<typename Archive>
@@ -56,6 +59,7 @@ Archive& operator|(Archive& ar, ServerHello& data) {
 
 struct ServerTankUpdate {
 	static constexpr gf::Id type = "ServerTankUpdate"_id;
+	gf::Id id; // id of the tank to update
 	float x;
 	float y;
 	float rot;
