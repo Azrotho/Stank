@@ -11,6 +11,8 @@
 #include "../common/Protocol.h"
 #include <gf/TcpListener.h>
 #include <gf/Log.h>
+
+#include "ServerUtility.h"
 #include "../common/Constants.h"
 
 ServerNetworking::ServerNetworking(gf::Random& random)
@@ -75,12 +77,14 @@ void ServerNetworking::run() {
             gf::TcpSocket socket = m_listener.accept();
             if (!socket)continue;
 
-            gf::Id id = m_random.get().computeId();
+            gf::Id id = ServerUtility::generateId();
 
             ServerPlayer playerInstance;
             playerInstance.id = id;
             playerInstance.socket = std::move(socket);
-            playerInstance.name = "";
+            playerInstance.name = ServerUtility::generateRandomName();
+
+            playerInstance.send(ServerHello{playerInstance.id, playerInstance.name});
 
             auto res = m_players.emplace(id, std::move(playerInstance));
             assert(res.second);

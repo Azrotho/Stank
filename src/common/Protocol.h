@@ -50,11 +50,12 @@ struct ClientDisconnect {
 struct ServerHello {
 	static constexpr gf::Id type = "ServerHello"_id;
 	gf::Id id; // donner un id
+	std::string name;
 };
 
 template<typename Archive>
 Archive& operator|(Archive& ar, ServerHello& data) {
-	return ar | data.id;
+	return ar | data.id | data.name;
 }
 
 struct ServerTankUpdate {

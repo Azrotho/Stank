@@ -10,6 +10,7 @@
 class ServerUtility {
 public:
 	static gf::Id generateId();
+	static std::string generateRandomName();
 };
 
 
