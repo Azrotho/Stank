@@ -54,8 +54,8 @@ add_executable(stank_server
         src/common/Protocol.h
         src/server/ServerUtility.cpp
         src/server/ServerUtility.h
-        src/server/serverPlayer.cpp
-        src/server/serverPlayer.h
+        src/server/ServerPlayer.cpp
+        src/server/ServerPlayer.h
         src/server/ServerLobby.cpp
         src/server/ServerLobby.h
 )

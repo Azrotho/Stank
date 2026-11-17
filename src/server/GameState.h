@@ -5,7 +5,7 @@
 #ifndef STANK_GAMESTATE_H
 #define STANK_GAMESTATE_H
 
-#include "serverPlayer.h"
+#include "ServerPlayer.h"
 
 class GameState {
     public:
