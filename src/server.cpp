@@ -8,6 +8,10 @@
 #include "common/Constants.h"
 #include "server/ServerNetworking.h"
 #include <box2d/box2d.h>
+#include <gf/Clock.h>
+#include <gf/Log.h>
+
+#include "common/Protocol.h"
 
 int receive(){
     return 0;
@@ -18,9 +22,29 @@ int send(){
 }
 
 
-int gameLoop(){
+int gameLoop(ServerNetworking &networking){
     //First: Initialize the game
+    gf::Clock clock;
     //Second: start a 30 TPS loop
+    while (true) {
+        clock.restart();
+
+        std::pair<gf::Id, gf::Packet> pocketPair;
+        while (networking.queue.poll(pocketPair)) {
+            auto& [id, packet] = pocketPair;
+            ServerPlayer &player = networking.m_players.at(id);
+            switch (packet.getType()) {
+                case ClientHello::type:
+                    gf::Log::info(("Player " +  player.name + " say hello!\n").c_str());
+                    break;
+                default:
+                    gf::Log::info(("Player " +  player.name + " sent a packet of an unknowed type\n").c_str());
+                    break;
+            }
+        }
+
+        usleep((unsigned int) ((1.0f / 30.0f - clock.getElapsedTime().asSeconds()) * 1000.0f));
+    }
     //Third: wait for inputs from network threads
     //Fourth: modify gameState according to the inputs
     //Fifth: send gameState to the network thread then go to third step
@@ -33,6 +57,9 @@ int main() {
     ServerNetworking networking = ServerNetworking(random);
 
     std::thread networkingThread(&ServerNetworking::run, &networking);
+
+    gameLoop(networking);
+
     networkingThread.join();
     std::cout << "Hello, World Server!" << std::endl;
 

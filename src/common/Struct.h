@@ -12,4 +12,9 @@ struct TankControls {
 	Action action = Action::Neutral;
 };
 
+template<typename Archive>
+Archive& operator|(Archive& ar, TankControls& data) {
+	return ar | data.direction | data.movement | data.action;
+}
+
 #endif //STANK_STRUCT_H

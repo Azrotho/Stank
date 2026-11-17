@@ -54,7 +54,7 @@ void ServerNetworking::run() {
                                 purgatory.push_back(player.id);
                                 break;
                             default:
-                                //TODO update le lobby
+                                queue.push({player.id, std::move(packet)});
                                 break;
                         }
                         break;

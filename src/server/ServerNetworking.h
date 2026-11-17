@@ -11,6 +11,8 @@
 #include <gf/Ref.h>
 #include "GameState.h"
 #include <atomic>
+#include <gf/Queue.h>
+
 #include "ServerLobby.h"
 
 
@@ -18,17 +20,15 @@ class ServerNetworking {
     public:
     ServerNetworking(gf::Random& random);
     void run();
+    gf::Queue<std::pair<gf::Id, gf::Packet>> queue;
+    std::map<gf::Id, ServerPlayer> m_players;
 
     private:
     static void signalHandler(int sig);
-
-
-    private:
     gf::Ref<gf::Random> m_random;
     gf::TcpListener m_listener;
     gf::SocketSelector m_selector;
     ServerLobby m_lobby;
-    std::map<gf::Id, ServerPlayer> m_players;
     static std::atomic_bool g_running;
 
 };

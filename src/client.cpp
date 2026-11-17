@@ -99,7 +99,11 @@ int main() {
 
         if (tickTimeAccumulator >= (1.0f / 30.0f)) {
             if (networking.m_isConnected.load()) {
-                //networking.send(ClientMove{player.getX(), player.getY(), player.getRotation()});
+                TankControls controls;
+                controls.action = Action::Neutral;
+                controls.direction = Direction::Neutral;
+                controls.movement = Movement::Neutral;
+                networking.send(ClientMove{controls});
             }
             tickTimeAccumulator = 0.0f;
         }
