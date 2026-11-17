@@ -42,6 +42,10 @@ int main() {
     moveBackward.addScancodeKeyControl(gf::Scancode::S);
     moveBackward.addKeycodeKeyControl(gf::Keycode::Down);
 
+    gf::Action shoot("shoot");
+    shoot.setContinuous();
+    shoot.addScancodeKeyControl(gf::Scancode::Space);
+
     gf::ActionContainer actions;
     actions.addAction(rotateLeft);
     actions.addAction(rotateRight);
@@ -100,9 +104,26 @@ int main() {
         if (tickTimeAccumulator >= (1.0f / 30.0f)) {
             if (networking.m_isConnected.load()) {
                 TankControls controls;
-                controls.action = Action::Neutral;
-                controls.direction = Direction::Neutral;
-                controls.movement = Movement::Neutral;
+                if (moveForward.isActive()) {
+                    controls.movement = Movement::Forward;
+                } else if (moveBackward.isActive()) {
+                    controls.movement = Movement::Backward;
+                } else {
+                    controls.movement = Movement::Neutral;
+                }
+                if (rotateLeft.isActive()) {
+                    controls.direction = Direction::Left;
+                } else if (rotateRight.isActive()) {
+                    controls.direction = Direction::Right;
+                } else {
+                    controls.direction = Direction::Neutral;
+                }
+
+                if (shoot.isActive()) {
+                    controls.action = Action::Shoot;
+                } else {
+                    controls.action = Action::Neutral;
+                }
                 networking.send(ClientMove{controls});
             }
             tickTimeAccumulator = 0.0f;
