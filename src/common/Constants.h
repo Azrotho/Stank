@@ -11,4 +11,7 @@ const std::string SERVER_IP = "127.0.0.1"; // To be deprecated
 const std::string SERVER_PORT = "13915"; // To be deprecated
 constexpr const char* Service = "13915";
 
+constexpr int TPS = 30;
+constexpr float TICK_TIME = 1.0f / TPS;
+
 #endif //STANK_CONSTANTS_H

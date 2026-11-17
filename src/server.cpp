@@ -43,7 +43,7 @@ int gameLoop(ServerNetworking &networking){
             }
         }
 
-        usleep((unsigned int) ((1.0f / 30.0f - clock.getElapsedTime().asSeconds()) * 1000.0f));
+        usleep((unsigned int) ((TICK_TIME - clock.getElapsedTime().asSeconds()) * 1000.0f));
     }
     //Third: wait for inputs from network threads
     //Fourth: modify gameState according to the inputs

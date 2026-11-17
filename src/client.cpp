@@ -101,7 +101,7 @@ int main() {
         player.move(moveForward.isActive(),moveBackward.isActive(),rotateRight.isActive(),rotateLeft.isActive(),dt);
         actions.reset();
 
-        if (tickTimeAccumulator >= (1.0f / 30.0f)) {
+        if (tickTimeAccumulator >= TICK_TIME) {
             if (networking.m_isConnected.load()) {
                 TankControls controls;
                 if (moveForward.isActive()) {
