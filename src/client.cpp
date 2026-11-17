@@ -1,6 +1,7 @@
 //
 // Created by azrotho on 09/10/2026.
 //
+#include <cinttypes>
 #include <gf/Event.h>
 #include <gf/Font.h>
 #include <gf/RenderWindow.h>
@@ -103,6 +104,22 @@ int main() {
 
         if (tickTimeAccumulator >= TICK_TIME) {
             if (networking.m_isConnected.load()) {
+                gf::Packet packet;
+                while (networking.queue.poll(packet)) {
+                    switch (packet.getType()) {
+                        case ServerHello::type: {
+                            ServerHello serverHello;
+                            serverHello = packet.as<ServerHello>();
+                            gf::Log::info("Received ServerHello packet from server my name is %s", serverHello.name.c_str());
+                            break;
+                        }
+                        default:
+                            gf::Log::info("Received packet of unknown type from server\n");
+                            break;
+                    }
+                }
+
+
                 TankControls controls;
                 if (moveForward.isActive()) {
                     controls.movement = Movement::Forward;
