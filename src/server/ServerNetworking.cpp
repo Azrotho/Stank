@@ -93,19 +93,18 @@ void ServerNetworking::run() {
             //TODO ajouter le joueur au ServerLobby
 
             gf::Log::info("(SERVER) {%" PRIX64 "} Connected.\n", player.id);
-
-            if (!purgatory.empty()) {
-                for (auto idPurgatory : purgatory) {
-                    auto it = m_players.find(idPurgatory);
-                    assert(it != m_players.end());
-                    auto& playerPurgatory = it->second;
-                    m_selector.removeSocket(playerPurgatory.socket);
-                    //TODO retirer le joueur du ServerLobby
-                    m_players.erase(it);
-                }
-            }
         }
 
+        if (!purgatory.empty()) {
+            for (auto idPurgatory : purgatory) {
+                auto it = m_players.find(idPurgatory);
+                assert(it != m_players.end());
+                auto& playerPurgatory = it->second;
+                m_selector.removeSocket(playerPurgatory.socket);
+                //TODO retirer le joueur du ServerLobby
+                m_players.erase(it);
+            }
+        }
     }
 }
 
