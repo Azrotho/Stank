@@ -47,11 +47,14 @@ int main() {
     shoot.setContinuous();
     shoot.addScancodeKeyControl(gf::Scancode::Space);
 
+
     gf::ActionContainer actions;
     actions.addAction(rotateLeft);
     actions.addAction(rotateRight);
     actions.addAction(moveForward);
     actions.addAction(moveBackward);
+    actions.addAction(shoot);
+
 
     float tickTimeAccumulator = 0.0f;
 
@@ -100,7 +103,6 @@ int main() {
             text.setString("Connexion KO");
         }
         player.move(moveForward.isActive(),moveBackward.isActive(),rotateRight.isActive(),rotateLeft.isActive(),dt);
-        actions.reset();
 
         if (tickTimeAccumulator >= TICK_TIME) {
             if (networking.m_isConnected.load()) {
@@ -145,6 +147,8 @@ int main() {
             }
             tickTimeAccumulator = 0.0f;
         }
+
+        actions.reset();
 
         // Draw the entities
         renderer.clear();
