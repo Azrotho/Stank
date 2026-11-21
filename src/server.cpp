@@ -37,6 +37,12 @@ int gameLoop(ServerNetworking &networking){
                 case ClientHello::type:
                     gf::Log::info(("Player " +  player.name + " say hello!\n").c_str());
                     break;
+                case ClientMove::type: {
+                    auto clientMove = packet.as<ClientMove>();
+                    // TODO: do something with the clientMove data
+                    gf::Log::info(("Player " +  player.name + " sent a ClientMove packet\n").c_str());
+                    break;
+                }
                 default:
                     gf::Log::info(("Player " +  player.name + " sent a packet of an unknowed type\n").c_str());
                     break;
