@@ -3,6 +3,9 @@
 //
 
 #include "Player.h"
+
+#include "../common/Constants.h"
+
 //branchez vous liste d'initialisation, ça sauve des vies à ce qu'il parait
 //https://www.reddit.com/r/Cplusplus/comments/10z8e5e/what_is_the_difference_between_the_member/?tl=fr
 Player::Player(float cx,float cy, float crot, std::string text) : texture(text), sprite(texture) {
