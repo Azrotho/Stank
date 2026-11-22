@@ -72,7 +72,7 @@ void Player::move(bool forward,bool backward,bool right,bool left,float dt){
     float realTurn=turn;
     if(speed<0) realTurn=-realTurn;
     rot+=realTurn*dt;
-    double rad = rot * (M_PI/180.0f);
+    double rad = rot * (M_PI/REVERSE_ROTATION);
     x += (float) (cos(rad)*(speed*dt));
     y += (float) (sin(rad)*(speed*dt));
     float spriteRot = (rot-90)* (M_PI/180.0f);

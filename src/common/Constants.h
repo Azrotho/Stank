@@ -14,4 +14,6 @@ constexpr const char* Service = "13915";
 constexpr int TPS = 30;
 constexpr float TICK_TIME = 1.0f / TPS;
 
+constexpr float REVERSE_ROTATION=180.0f;
+
 #endif //STANK_CONSTANTS_H

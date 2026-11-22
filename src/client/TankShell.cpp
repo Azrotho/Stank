@@ -18,10 +18,10 @@ TankShell::TankShell(float cx,float cy, float crot, float damage,int newIdOwner)
 
 void TankShell::move(float dt) {
     if (distanceToMake==(distanceMade+(speed*dt))) toDestroy();
-    double rad = rot * (M_PI/180.0f);
+    double rad = rot * (M_PI/REVERSE_ROTATION);
     x+= (float) (cos(rad)*(speed*dt));
     y+= (float) (sin(rad)*(speed*dt));
-    float spriteRot = (rot-90)* (M_PI/180.0f);
+    float spriteRot = (rot-90)* (M_PI/REVERSE_ROTATION);
     setSprite(x,y,spriteRot,2.0f);
     distanceMade+=speed*dt;
 }
