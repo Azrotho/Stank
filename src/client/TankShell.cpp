@@ -3,6 +3,7 @@
 //
 
 #include "TankShell.h"
+#include "../common/Constants.h"
 
 #include <gf/Transform.h>
 //branchez vous liste d'initialisation, ça sauve des vies à ce qu'il parait
