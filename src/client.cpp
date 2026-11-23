@@ -102,7 +102,6 @@ int main() {
         } else {
             text.setString("Connexion KO");
         }
-        player.move(moveForward.isActive(),moveBackward.isActive(),rotateRight.isActive(),rotateLeft.isActive(),dt);
 
         if (tickTimeAccumulator >= TICK_TIME) {
             if (networking.m_isConnected.load()) {
@@ -113,6 +112,14 @@ int main() {
                             ServerHello serverHello;
                             serverHello = packet.as<ServerHello>();
                             gf::Log::info("Received ServerHello packet from server my name is %s", serverHello.name.c_str());
+                            break;
+                        }
+                        case ServerTankUpdate::type: {
+                            ServerTankUpdate serverTankUpdate;
+                            serverTankUpdate = packet.as<ServerTankUpdate>();
+                            player.setX(serverTankUpdate.x);
+                            player.setY(serverTankUpdate.y);
+                            player.setRotation(serverTankUpdate.rot);
                             break;
                         }
                         default:

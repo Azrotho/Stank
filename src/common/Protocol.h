@@ -66,4 +66,9 @@ struct ServerTankUpdate {
 	float rot;
 };
 
+template<typename Archive>
+Archive& operator|(Archive& ar, ServerTankUpdate& data) {
+	return ar | data.id | data.x | data.y | data.rot;
+}
+
 #endif //STANK_PROTOCOL_H

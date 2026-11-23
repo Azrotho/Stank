@@ -42,6 +42,15 @@ int gameLoop(ServerNetworking &networking){
                     // TODO: do something with the clientMove data
                     gf::Log::info(("Player " +  player.name + " sent a ClientMove packet\n").c_str());
                     player.move(ctrl.forward, ctrl.backward,ctrl.right, ctrl.left, dt);
+
+                    //send update ici (temporaire)
+                    ServerTankUpdate update;
+                    update.id = player.id;
+                    update.x = player.getX();
+                    update.y = player.getY();
+                    update.rot = player.getRotation();
+                    player.send(update);
+
                     break;
                 }
                 default:
@@ -49,7 +58,6 @@ int gameLoop(ServerNetworking &networking){
                     break;
             }
         }
-
         usleep((unsigned int) ((TICK_TIME - clock.getElapsedTime().asSeconds()) * 1000.0f));
     }
     //Third: wait for inputs from network threads
