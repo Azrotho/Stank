@@ -123,26 +123,11 @@ int main() {
 
 
                 TankControls controls;
-                if (moveForward.isActive()) {
-                    controls.movement = Movement::Forward;
-                } else if (moveBackward.isActive()) {
-                    controls.movement = Movement::Backward;
-                } else {
-                    controls.movement = Movement::Neutral;
-                }
-                if (rotateLeft.isActive()) {
-                    controls.direction = Direction::Left;
-                } else if (rotateRight.isActive()) {
-                    controls.direction = Direction::Right;
-                } else {
-                    controls.direction = Direction::Neutral;
-                }
-
-                if (shoot.isActive()) {
-                    controls.action = Action::Shoot;
-                } else {
-                    controls.action = Action::Neutral;
-                }
+                controls.forward= moveForward.isActive();
+                controls.backward= moveBackward.isActive();
+                controls.left=rotateLeft.isActive();
+                controls.right=rotateRight.isActive();
+                controls.action = shoot.isActive() ? Action::Shoot : Action::Neutral; 
                 networking.send(ClientMove{controls});
             }
             tickTimeAccumulator = 0.0f;

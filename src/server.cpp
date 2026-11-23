@@ -6,7 +6,6 @@
 #include <thread>
 #include "server/ServerNetworking.h"
 #include "common/Constants.h"
-#include "server/ServerNetworking.h"
 #include <box2d/box2d.h>
 #include <gf/Clock.h>
 #include <gf/Log.h>
@@ -27,7 +26,7 @@ int gameLoop(ServerNetworking &networking){
     gf::Clock clock;
     //Second: start a 30 TPS loop
     while (true) {
-        clock.restart();
+        float dt = clock.restart().asSeconds();
 
         std::pair<gf::Id, gf::Packet> pocketPair;
         while (networking.queue.poll(pocketPair)) {
@@ -39,8 +38,10 @@ int gameLoop(ServerNetworking &networking){
                     break;
                 case ClientMove::type: {
                     auto clientMove = packet.as<ClientMove>();
+                    TankControls ctrl = clientMove.controls;
                     // TODO: do something with the clientMove data
                     gf::Log::info(("Player " +  player.name + " sent a ClientMove packet\n").c_str());
+                    player.move(ctrl.forward, ctrl.backward,ctrl.right, ctrl.left, dt);
                     break;
                 }
                 default:

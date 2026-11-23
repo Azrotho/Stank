@@ -7,14 +7,16 @@
 #include "Enums.h"
 
 struct TankControls {
-	Direction direction = Direction::Neutral;
-	Movement movement = Movement::Neutral;
+	bool forward=false;
+	bool backward=false;
+	bool right=false;
+	bool left=false;
 	Action action = Action::Neutral;
 };
 
 template<typename Archive>
 Archive& operator|(Archive& ar, TankControls& data) {
-	return ar | data.direction | data.movement | data.action;
+	return ar | data.forward | data.backward | data.right | data.left | data.action;
 }
 
 #endif //STANK_STRUCT_H

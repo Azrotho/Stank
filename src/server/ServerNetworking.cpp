@@ -79,7 +79,7 @@ void ServerNetworking::run() {
 
             gf::Id id = ServerUtility::generateId();
 
-            ServerPlayer playerInstance;
+            ServerPlayer playerInstance(200,200,0,"sprite/PNG/default/tank_red.png");
             playerInstance.id = id;
             playerInstance.socket = std::move(socket);
             playerInstance.name = ServerUtility::generateRandomName();

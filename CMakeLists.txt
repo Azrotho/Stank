@@ -70,6 +70,7 @@ target_link_libraries(stank_server
         PUBLIC
         box2d::box2d
         PRIVATE
+        gf::graphics
         gf::net
 )
 
