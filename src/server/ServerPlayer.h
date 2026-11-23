@@ -18,7 +18,7 @@
 class ServerPlayer {
 
 	public:
-		ServerPlayer(float x, float y, float rot, std::string text);
+		ServerPlayer(float x, float y, float rot);
 		void move(bool forward,bool backward,bool right,bool left,float dt);
 		//renvoie true si un obus a été créé
 		//renvoie false sinon
@@ -27,7 +27,6 @@ class ServerPlayer {
 		float getY() const;
 		float getRotation() const;
 		float getSpeed() const;
-		gf::Sprite getSprite();
 
 		void setX(float newX);
 		void setY(float newY);
@@ -51,7 +50,6 @@ class ServerPlayer {
 	private :
 		void deceleration(float dt);
 		bool whatDir();
-		void setSprite(float posX, float posY,float rad, float scale);
 		//variables pour la vitesse
 		float accel = 70.0f;
 		float speed = 0.0f;
@@ -73,10 +71,6 @@ class ServerPlayer {
 		float x;
 		float y;
 		float rot;
-
-		gf::Texture texture;
-    	gf::Sprite sprite;
-
 };
 
 #endif //STANK_SERVERPLAYER_H

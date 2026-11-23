@@ -6,7 +6,7 @@
 
 //branchez vous liste d'initialisation, ça sauve des vies à ce qu'il parait
 //https://www.reddit.com/r/Cplusplus/comments/10z8e5e/what_is_the_difference_between_the_member/?tl=fr
-ServerPlayer::ServerPlayer(float cx,float cy, float crot, std::string text) : texture(text), sprite(texture) {
+ServerPlayer::ServerPlayer(float cx,float cy, float crot) {
     x=cx;
     y=cy;
     rot=crot;
@@ -77,7 +77,7 @@ void ServerPlayer::move(bool forward,bool backward,bool right,bool left,float dt
     x += (float) (cos(rad)*(speed*dt));
     y += (float) (sin(rad)*(speed*dt));
     float spriteRot = (rot-90)* (M_PI/180.0f);
-    setSprite(x,y,spriteRot,2.0f);
+    // setSprite(x,y,spriteRot,2.0f);
 }
 
 /******************************
@@ -113,15 +113,4 @@ void ServerPlayer::setRotation(float newRotation){
 
 float ServerPlayer::getSpeed() const{
     return speed;
-}
-
-void ServerPlayer::setSprite(float posX,float posY, float rad, float scale){
-    sprite.setPosition({posX,posY});
-    sprite.setScale(scale);
-    sprite.setRotation(rad);
-    sprite.setAnchor(gf::Anchor::Center);
-}
-
-gf::Sprite ServerPlayer::getSprite(){
-    return sprite;
 }
