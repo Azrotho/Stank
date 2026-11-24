@@ -12,46 +12,33 @@
 
 class Player {
 	public:
-		Player(float x, float y, float rot, std::string text);
-		void move(bool forward,bool backward,bool right,bool left,float dt);
-		//renvoie true si un obus a été créé
-		//renvoie false sinon
-		bool shoot(); // pas encore implem
-		float getX() const;
-		float getY() const;
-		float getRotation() const;
-		float getSpeed() const;
-		gf::Sprite getSprite();
+		//Create a player instance with coordinates (x, y) , orientation rot and a texture path "texturePath"
+		Player(float x, float y, float rot, const std::string& texturePath);
 
+		//returns coordinate x
+		float getX() const;
+		//returns coordinate y
+		float getY() const;
+		//returns orientation (still needs conversion in radiant before usage)
+		float getOrientation() const;
+
+
+		//returns a the associated sprite
+		gf::Sprite getSprite();
+		//sets coordinates x to newX
 		void setX(float newX);
+		//sets coordinate y to newY
 		void setY(float newY);
-		void setRotation(float newRotation);
+		//sets tank orientation in float
+		void setOrientation(float newOrientation);
+		//sets the sprite to position (posX, posY), with orientation in radiant rad, and of size scale
+		void setSprite(float posX, float posY,float rad, float scale);
+
 		
 	private :
-		void deceleration(float dt);
-		bool whatDir();
-		void setSprite(float posX, float posY,float rad, float scale);
-		//variables pour la vitesse
-		float accel = 70.0f;
-		float speed = 0.0f;
-		float maxSpeed = 100.0f;
-		//variables pour tourner
-		float turn = 0.0f;
-		float turnAccel=300.0f;
-		float maxTurn=150.0f;
-		//frein
-		float brake=200.0f;
-
-		//stats de bases
-		float pv=100.0f;
-		float pvMax=100.0f;
-		float damages=50.0f;
-	    float reloadTime=3.0f;
-
-
-		float x;
-		float y;
-		float rot;
+		float m_coordX;
+		float m_coordY;
+		float m_orientation;
 
 		gf::Texture texture;
     	gf::Sprite sprite;

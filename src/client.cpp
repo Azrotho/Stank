@@ -91,7 +91,7 @@ int main() {
                 case gf::EventType::Closed:
                     window.close();
                     networking.stop();
-                    break; // TODO: Séparé input & update
+                    break; // TODO: Séparer input & update
                 default:
                     break;
             }
@@ -119,7 +119,7 @@ int main() {
                             serverTankUpdate = packet.as<ServerTankUpdate>();
                             player.setX(serverTankUpdate.x);
                             player.setY(serverTankUpdate.y);
-                            player.setRotation(serverTankUpdate.rot);
+                            player.setOrientation(serverTankUpdate.rot);
                             break;
                         }
                         default:
@@ -130,10 +130,10 @@ int main() {
 
 
                 TankControls controls;
-                controls.forward= moveForward.isActive();
-                controls.backward= moveBackward.isActive();
-                controls.left=rotateLeft.isActive();
-                controls.right=rotateRight.isActive();
+                controls.forward = moveForward.isActive();
+                controls.backward = moveBackward.isActive();
+                controls.left = rotateLeft.isActive();
+                controls.right = rotateRight.isActive();
                 controls.action = shoot.isActive() ? Action::Shoot : Action::Neutral; 
                 networking.send(ClientMove{controls});
             }
@@ -144,7 +144,9 @@ int main() {
 
         // Draw the entities
         renderer.clear();
-        gf::Sprite s=player.getSprite();
+        float spriteRot = (player.getOrientation()-90.0f)* (M_PI/180.0f);
+        player.setSprite(player.getX(),player.getY(),spriteRot,2.0f);
+        gf::Sprite s = player.getSprite();
         renderer.draw(s);
         renderer.draw(text);
         renderer.display();
