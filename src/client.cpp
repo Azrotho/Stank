@@ -120,6 +120,7 @@ int main() {
                             player.setX(serverTankUpdate.x);
                             player.setY(serverTankUpdate.y);
                             player.setOrientation(serverTankUpdate.rot);
+                            gf::Log::info("Received ServerTankUpdate packet X=%f Y=%f ROT=%f \n", serverTankUpdate.x, serverTankUpdate.y, serverTankUpdate.rot);
                             break;
                         }
                         default:

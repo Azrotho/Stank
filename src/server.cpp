@@ -11,6 +11,7 @@
 #include <gf/Log.h>
 
 #include "common/Protocol.h"
+#include "common/Constants.h"
 
 int receive(){
     return 0;
@@ -41,7 +42,7 @@ int gameLoop(ServerNetworking &networking){
                     TankControls ctrl = clientMove.controls;
                     // TODO: do something with the clientMove data
                     gf::Log::info(("Player " +  player.name + " sent a ClientMove packet\n").c_str());
-                    player.move(ctrl.forward, ctrl.backward,ctrl.right, ctrl.left, dt);
+                    player.move(ctrl.forward, ctrl.backward,ctrl.right, ctrl.left, TICK_TIME);
 
                     //send update ici (temporaire)
                     ServerTankUpdate update;
