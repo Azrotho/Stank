@@ -129,7 +129,7 @@ int main() {
                     }
                 }
 
-
+            if (tickTimeAccumulator >= TICK_TIME) {
                 TankControls controls;
                 controls.forward = moveForward.isActive();
                 controls.backward = moveBackward.isActive();
@@ -137,9 +137,9 @@ int main() {
                 controls.right = rotateRight.isActive();
                 controls.action = shoot.isActive() ? Action::Shoot : Action::Neutral; 
                 networking.send(ClientMove{controls});
+                tickTimeAccumulator = 0.0f;
             }
-            tickTimeAccumulator = 0.0f;
-        //}
+        }
 
         actions.reset();
 
