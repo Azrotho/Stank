@@ -86,6 +86,10 @@ void ServerNetworking::run() {
 
             playerInstance.send(ServerHello{playerInstance.id, playerInstance.name});
 
+            for (auto &players : m_players) {
+                players.second.send(ClientPlayerConnect{players.second.id, players.second.name});
+            }
+
             auto res = m_players.emplace(id, std::move(playerInstance));
             assert(res.second);
             auto& player = res.first->second;//TODO à comprendre

@@ -47,7 +47,7 @@ Archive& operator|(Archive& ar, ClientDisconnect& data) {
 }
 
 struct ClientPlayerDisconnect {
-	static constexpr gf::Id type = "ClientDisconnect"_id;
+	static constexpr gf::Id type = "ClientPlayerDisconnect"_id;
 	gf::Id id;
 };
 
@@ -57,13 +57,14 @@ Archive& operator|(Archive& ar, ClientPlayerDisconnect& data) {
 }
 
 struct ClientPlayerConnect {
-	static constexpr gf::Id type = "ClientDisconnect"_id;
+	static constexpr gf::Id type = "ClientPlayerConnect"_id;
 	gf::Id id;
+	std::string name;
 };
 
 template <typename Archive>
 Archive& operator|(Archive& ar, ClientPlayerConnect& data) {
-	return ar | data.id;
+	return ar | data.id | data.name;
 }
 
 
