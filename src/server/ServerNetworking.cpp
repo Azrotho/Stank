@@ -86,6 +86,10 @@ void ServerNetworking::run() {
 
             playerInstance.send(ServerHello{playerInstance.id, playerInstance.name});
 
+            for (auto &players : m_players) {
+                players.second.send(ServerPlayerConnect{players.second.id, players.second.name});
+            }
+
             auto res = m_players.emplace(id, std::move(playerInstance));
             assert(res.second);
             auto& player = res.first->second;//TODO à comprendre
@@ -103,6 +107,9 @@ void ServerNetworking::run() {
                 m_selector.removeSocket(playerPurgatory.socket);
                 //TODO retirer le joueur du ServerLobby
                 m_players.erase(it);
+                for (auto &player : m_players) {
+                    player.second.send(ServerPlayerDisconnect{playerPurgatory.id});
+                }
             }
         }
     }

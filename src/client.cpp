@@ -103,7 +103,7 @@ int main() {
             text.setString("Connexion KO");
         }
 
-        if (tickTimeAccumulator >= TICK_TIME) {
+        //if (tickTimeAccumulator >= TICK_TIME) {
             if (networking.m_isConnected.load()) {
                 gf::Packet packet;
                 while (networking.queue.poll(packet)) {
@@ -111,7 +111,7 @@ int main() {
                         case ServerHello::type: {
                             ServerHello serverHello;
                             serverHello = packet.as<ServerHello>();
-                            gf::Log::info("Received ServerHello packet from server my name is %s", serverHello.name.c_str());
+                           // gf::Log::info("Received ServerHello packet from server my name is %s", serverHello.name.c_str());
                             break;
                         }
                         case ServerTankUpdate::type: {
@@ -120,7 +120,7 @@ int main() {
                             player.setX(serverTankUpdate.x);
                             player.setY(serverTankUpdate.y);
                             player.setOrientation(serverTankUpdate.rot);
-                            gf::Log::info("Received ServerTankUpdate packet X=%f Y=%f ROT=%f \n", serverTankUpdate.x, serverTankUpdate.y, serverTankUpdate.rot);
+                           // gf::Log::info("Received ServerTankUpdate packet X=%f Y=%f ROT=%f \n", serverTankUpdate.x, serverTankUpdate.y, serverTankUpdate.rot);
                             break;
                         }
                         default:
@@ -129,7 +129,7 @@ int main() {
                     }
                 }
 
-
+            if (tickTimeAccumulator >= TICK_TIME) {
                 TankControls controls;
                 controls.forward = moveForward.isActive();
                 controls.backward = moveBackward.isActive();
@@ -137,8 +137,8 @@ int main() {
                 controls.right = rotateRight.isActive();
                 controls.action = shoot.isActive() ? Action::Shoot : Action::Neutral; 
                 networking.send(ClientMove{controls});
+                tickTimeAccumulator = 0.0f;
             }
-            tickTimeAccumulator = 0.0f;
         }
 
         actions.reset();

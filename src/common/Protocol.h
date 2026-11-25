@@ -46,25 +46,26 @@ Archive& operator|(Archive& ar, ClientDisconnect& data) {
 	return ar;
 }
 
-struct ClientPlayerDisconnect {
-	static constexpr gf::Id type = "ClientDisconnect"_id;
-	gf::Id id;
-};
-
-template <typename Archive>
-Archive& operator|(Archive& ar, ClientPlayerDisconnect& data) {
-	return ar | data.id;
-}
-
-struct ClientPlayerConnect {
-	static constexpr gf::Id type = "ClientDisconnect"_id;
-	gf::Id id;
-};
-
-template <typename Archive>
-Archive& operator|(Archive& ar, ClientPlayerConnect& data) {
-	return ar | data.id;
-}
+// struct ClientPlayerDisconnect { ClientPlayerDisconnect --> ServerPlayerDisconnect
+// 	static constexpr gf::Id type = "ClientPlayerDisconnect"_id;
+// 	gf::Id id;
+// };
+//
+// template <typename Archive>
+// Archive& operator|(Archive& ar, ClientPlayerDisconnect& data) {
+// 	return ar | data.id;
+// }
+//
+// struct ClientPlayerConnect { ClientPlayerConnect --> ServerPlayerConnect
+// 	static constexpr gf::Id type = "ClientPlayerConnect"_id;
+// 	gf::Id id;
+// 	std::string name;
+// };
+//
+// template <typename Archive>
+// Archive& operator|(Archive& ar, ClientPlayerConnect& data) {
+// 	return ar | data.id | data.name;
+// }
 
 
 /*
@@ -93,6 +94,27 @@ struct ServerTankUpdate {
 template<typename Archive>
 Archive& operator|(Archive& ar, ServerTankUpdate& data) {
 	return ar | data.id | data.x | data.y | data.rot;
+}
+
+struct ServerPlayerDisconnect {
+	static constexpr gf::Id type = "ServerPlayerDisconnect"_id;
+	gf::Id id;
+};
+
+template <typename Archive>
+Archive& operator|(Archive& ar, ServerPlayerDisconnect& data) {
+	return ar | data.id;
+}
+
+struct ServerPlayerConnect {
+	static constexpr gf::Id type = "ServerPlayerConnect"_id;
+	gf::Id id;
+	std::string name;
+};
+
+template <typename Archive>
+Archive& operator|(Archive& ar, ServerPlayerConnect& data) {
+	return ar;
 }
 
 #endif //STANK_PROTOCOL_H
