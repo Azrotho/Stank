@@ -103,7 +103,7 @@ int main() {
             text.setString("Connexion KO");
         }
 
-        if (tickTimeAccumulator >= TICK_TIME) {
+        //if (tickTimeAccumulator >= TICK_TIME) {
             if (networking.m_isConnected.load()) {
                 gf::Packet packet;
                 while (networking.queue.poll(packet)) {
@@ -139,7 +139,7 @@ int main() {
                 networking.send(ClientMove{controls});
             }
             tickTimeAccumulator = 0.0f;
-        }
+        //}
 
         actions.reset();
 
