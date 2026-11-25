@@ -41,6 +41,30 @@ struct ClientDisconnect {
 	static constexpr gf::Id type = "ClientDisconnect"_id;
 };
 
+template <typename Archive>
+Archive& operator|(Archive& ar, ClientDisconnect& data) {
+	return ar;
+}
+
+struct ClientPlayerDisconnect {
+	static constexpr gf::Id type = "ClientDisconnect"_id;
+	gf::Id id;
+};
+
+template <typename Archive>
+Archive& operator|(Archive& ar, ClientPlayerDisconnect& data) {
+	return ar | data.id;
+}
+
+struct ClientPlayerConnect {
+	static constexpr gf::Id type = "ClientDisconnect"_id;
+	gf::Id id;
+};
+
+template <typename Archive>
+Archive& operator|(Archive& ar, ClientPlayerConnect& data) {
+	return ar | data.id;
+}
 
 
 /*
