@@ -111,7 +111,7 @@ int main() {
                         case ServerHello::type: {
                             ServerHello serverHello;
                             serverHello = packet.as<ServerHello>();
-                            gf::Log::info("Received ServerHello packet from server my name is %s", serverHello.name.c_str());
+                           // gf::Log::info("Received ServerHello packet from server my name is %s", serverHello.name.c_str());
                             break;
                         }
                         case ServerTankUpdate::type: {
@@ -120,7 +120,7 @@ int main() {
                             player.setX(serverTankUpdate.x);
                             player.setY(serverTankUpdate.y);
                             player.setOrientation(serverTankUpdate.rot);
-                            gf::Log::info("Received ServerTankUpdate packet X=%f Y=%f ROT=%f \n", serverTankUpdate.x, serverTankUpdate.y, serverTankUpdate.rot);
+                           // gf::Log::info("Received ServerTankUpdate packet X=%f Y=%f ROT=%f \n", serverTankUpdate.x, serverTankUpdate.y, serverTankUpdate.rot);
                             break;
                         }
                         default:

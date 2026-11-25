@@ -28,20 +28,19 @@ int gameLoop(ServerNetworking &networking){
     //Second: start a 30 TPS loop
     while (true) {
         float dt = clock.restart().asSeconds();
-
         std::pair<gf::Id, gf::Packet> pocketPair;
         while (networking.queue.poll(pocketPair)) {
             auto& [id, packet] = pocketPair;
             ServerPlayer &player = networking.m_players.at(id);
             switch (packet.getType()) {
                 case ClientHello::type:
-                    gf::Log::info(("Player " +  player.name + " say hello!\n").c_str());
+                   // gf::Log::info(("Player " +  player.name + " say hello!\n").c_str());
                     break;
                 case ClientMove::type: {
                     auto clientMove = packet.as<ClientMove>();
                     TankControls ctrl = clientMove.controls;
                     // TODO: do something with the clientMove data
-                    gf::Log::info(("Player " +  player.name + " sent a ClientMove packet\n").c_str());
+                   // gf::Log::info(("Player " +  player.name + " sent a ClientMove packet\n").c_str());
                     player.move(ctrl.forward, ctrl.backward,ctrl.right, ctrl.left, TICK_TIME);
 
                     //send update ici (temporaire)
@@ -62,7 +61,10 @@ int gameLoop(ServerNetworking &networking){
                     break;
             }
         }
-        usleep((unsigned int) ((TICK_TIME - clock.getElapsedTime().asSeconds()) * 1000.0f));
+
+        //usleep((unsigned int) ((TICK_TIME - clock.getElapsedTime().asSeconds()) * 1000.0f));
+        int time = (int) (TICK_TIME - clock.getElapsedTime().asSeconds()) * 1000.0f;
+        std::this_thread::sleep_for (std::chrono::milliseconds(time));
     }
     //Third: wait for inputs from network threads
     //Fourth: modify gameState according to the inputs
