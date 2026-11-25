@@ -50,7 +50,10 @@ int gameLoop(ServerNetworking &networking){
                     update.x = player.getX();
                     update.y = player.getY();
                     update.rot = player.getRotation();
-                    player.send(update);
+
+                    for (auto &players: networking.m_players) {
+                        players.second.send(update);
+                    }
 
                     break;
                 }
