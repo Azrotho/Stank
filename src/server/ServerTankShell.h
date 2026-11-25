@@ -1,14 +1,15 @@
-#ifndef STANK_PLAYER_H
-#define STANK_PLAYER_H
+#ifndef STANK_TANKSHELL_H
+#define STANK_TANKSHELL_H
 #include <cmath>
 #include <gf/Sprite.h>
 #include <gf/Texture.h>
+#include <box2d/box2d.h>
 
-class TankShell {
+class ServerTankShell {
 	public:
-		TankShell(float x, float y, float rotation,float tankDamages,int newIdOwner);
+		ServerTankShell(float x, float y, float rotation,float tankDamages,int newIdOwner);
 
-		void move(float dt);
+		bool move(float dt);
 
 		float getX() const;
 		float getY() const;
@@ -21,11 +22,8 @@ class TankShell {
         void setY(float newY);
         void setDamages(float tankDamages);
 
-		void toDestroy();
-		bool isDestructible() const;
 
 	private :
-		void setSprite(float posX, float posY, float rad,float scale);
 
 		int idOwner;
 
@@ -39,11 +37,10 @@ class TankShell {
 		float distanceToMake=100.0f;
 		float distanceMade=0.0f;
 
-		gf::Texture texture;
-		gf::Sprite sprite;
+		
 
 		bool destroyMePlease=false;
 };
 
 
-#endif //STANK_PLAYER_H
+#endif //STANK_TANKSHELL_H

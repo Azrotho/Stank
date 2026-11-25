@@ -64,6 +64,8 @@ add_executable(stank_server
         src/server/ServerLobby.h
         src/common/Enums.h
         src/common/Struct.h
+        src/server/ServerTankShell.cpp 
+        src/server/ServerTankShell.h
 )
 
 target_link_libraries(stank_server
