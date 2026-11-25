@@ -79,7 +79,10 @@ void ServerNetworking::run() {
 
             gf::Id id = ServerUtility::generateId();
 
-            ServerPlayer playerInstance(200,200,0);
+            int randomX = m_random.get().computeUniformInteger(0, 400);
+            int randomY = m_random.get().computeUniformInteger(0, 400);
+
+            ServerPlayer playerInstance(randomX,randomY,0);
             playerInstance.id = id;
             playerInstance.socket = std::move(socket);
             playerInstance.name = ServerUtility::generateRandomName();
